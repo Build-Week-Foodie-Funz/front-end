@@ -7,4 +7,7 @@
  *  - Navigation component
  *  - Used for creation or editing of the individual people/users
  *  - Name of a person, their image
+ * 
+ * 
  */
+import React from 'react';
