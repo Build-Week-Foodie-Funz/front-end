@@ -7,4 +7,15 @@
  *  - Navigation component
  *  - Used for creation or editing of the individual people/users
  *  - Name of a person, their image
+ * 
+ * 
  */
+import React from 'react';
+
+const EditUser = props => {
+    return (
+        <p>Test</p>
+    )
+};
+
+export default EditUser;
