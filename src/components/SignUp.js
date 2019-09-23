@@ -60,9 +60,9 @@ const SignUp = ({ errors, status, value, touched }) => {
         <InputContainer>
           <UserInput>
             <StyledField type="text" name="username" placeholder="Username" />
-            {/* {touched.username && errors.username && (
-          <p classname="error">{errors.username}</p>
-        )} */}
+            {touched.username && errors.username && (
+              <p classname="error">{errors.username}</p>
+            )}
           </UserInput>
           <UserInput>
             <StyledField
@@ -70,9 +70,9 @@ const SignUp = ({ errors, status, value, touched }) => {
               type="email"
               placeholder="Email address"
             />
-            {/* {touched.email && errors.email && (
-          <p className="error">{errors.email}</p>
-        )} */}
+            {touched.email && errors.email && (
+              <p className="error">{errors.email}</p>
+            )}
           </UserInput>
           <UserInput>
             <StyledField
@@ -80,13 +80,15 @@ const SignUp = ({ errors, status, value, touched }) => {
               type="password"
               placeholder="Enter Your Password"
             />
-            {/* {touched.password && errors.password && (
-          <p className="error">{errors.password}</p>
-        )} */}
+            {touched.password && errors.password && (
+              <p className="error">{errors.password}</p>
+            )}
           </UserInput>
           <UserInput>
             <StyledField name="area" type="location" placeholder="Location" />
-            {/* {touched.area && errors.area && <p className="error">{errors.area}</p>} */}
+            {touched.area && errors.area && (
+              <p className="error">{errors.area}</p>
+            )}
           </UserInput>
         </InputContainer>
         Forgot password? <a href="#">reset</a>
