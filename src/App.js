@@ -22,10 +22,12 @@ function App() {
       <div className="App">
         <Route exact path="/" component={Login} />
         <Route path='/signup' component={SignUp}/>
-        <PrivateRoute path='/dashboard' component={Dashboard}/>
-        <PrivateRoute path='/foodform/:id' component={FoodForm}/>
-        <PrivateRoute path='/editprofile/' component={EditUser}/>
-        <PrivateRoute path='/fooditem/:id' component={FoodItem}/>
+        {/* These four below will be converted to PrivateRouters*/}
+        <Route path='/dashboard' component={Dashboard}/>
+        <Route path='/foodform/:id' component={FoodForm}/>
+        <Route path='/editprofile/' component={EditUser}/>
+        <Route path='/fooditem/:id' component={FoodItem}/>
+         {/* These four above will be converted to PrivateRouters*/}
       </div>
     </Router>
   );

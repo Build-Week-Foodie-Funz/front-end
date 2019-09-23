@@ -11,3 +11,11 @@
  * 
  */
 import React from 'react';
+
+const EditUser = props => {
+    return (
+        <p>Test</p>
+    )
+};
+
+export default EditUser;
