@@ -15,9 +15,14 @@ import Formik, { withFormik, Field, Form } from "formik";
 import styled from "styled-components";
 import profilePicture from "../images/defaultuser.png";
 
+const WarningText = styled.p`
+	color: $background;
+`;
+
 const UserContainer = styled.div`
-	background-color: #fbfcee;
+	background-color: $background;
 	width: 100%;
+	display: flex;
 `;
 
 const UserInput = styled.div`
@@ -28,6 +33,7 @@ const UserInput = styled.div`
 
 const InputContainer = styled.div`
 	background-color: #fbfcee;
+	width: 50%;
 `;
 
 const StyledField = styled.input`
@@ -45,32 +51,52 @@ const ButtonContainer = styled.div`
 	flex-direction: column;
 	width: 10%;
 	margin: 0 auto;
+	align-items: center;
+	justify-content: center;
+`;
+
+const UserImage = styled.img`
+	width: 200px;
+	height: 200px;
+	margin: 10px;
+	border: 4px solid black;
 `;
 
 const EditUser = props => {
-	const [data, setDate] = useState("");
-	const initialState = {
-		username: "",
-		password: "",
+	const [userUpdate, setUserUpdate] = useState({
+		name: "",
 		email: "",
+		password: "",
 		location: ""
+	});
+	// const initialState = {
+	// 	username: "",
+	// 	password: "",
+	// 	email: "",
+	// 	location: ""
+	// };
+
+	const updateUserInfo = e => {
+		console.log(userUpdate);
+		setUserUpdate({ ...userUpdate, [e.target.name]: e.target.value });
 	};
 
 	return (
 		<Form id="update-form">
 			<UserContainer>
-				UPDATE PROFILE:
-				<p>
-					'' Please only change the field that you want updated, leave the
-					rest empty.
-				</p>
 				<InputContainer>
+					<h2>UPDATE PROFILE:</h2>
+					<WarningText>
+						'' Please only change the field that you want updated, leave
+						the rest empty.
+					</WarningText>
 					<UserInput>
 						<StyledField
 							id="username-input"
 							type="text"
 							name="username"
 							placeholder="Username"
+							onChange={updateUserInfo}
 						/>
 					</UserInput>
 					<UserInput>
@@ -82,6 +108,7 @@ const EditUser = props => {
 							type="password"
 							name="password"
 							placeholder="Password"
+							onChange={updateUserInfo}
 						/>
 					</UserInput>
 					<UserInput>
@@ -90,11 +117,12 @@ const EditUser = props => {
 							type="text"
 							name="location"
 							placeholder="Location"
+							onChange={updateUserInfo}
 						/>
 					</UserInput>
 				</InputContainer>
 				<ButtonContainer>
-					<img src={profilePicture}></img>
+					<UserImage src={profilePicture}></UserImage>
 					<button type="submit">Update Profile</button>
 					<button
 						onClick={
