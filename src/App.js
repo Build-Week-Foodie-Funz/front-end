@@ -10,7 +10,7 @@ import PrivateRoute from "./components/privateRoute";
 
 import Login from "./components/Login";
 import Dashboard from './components/Dashboard';
-import EditUser from './components/EditUser';
+import FormikEditUser from './components/EditUser';
 import FoodForm from './components/FoodForm';
 import SignUp from './components/SignUp';
 import FoodItem from './components/FoodItem';
@@ -25,7 +25,7 @@ function App() {
         {/* These four below will be converted to PrivateRouters*/}
         <Route path='/dashboard' component={Dashboard}/>
         <Route path='/foodform/:id' component={FoodForm}/>
-        <Route path='/editprofile/' component={EditUser}/>
+        <Route path='/editprofile/' component={FormikEditUser}/>
         <Route path='/fooditem/:id' component={FoodItem}/>
          {/* These four above will be converted to PrivateRouters*/}
       </div>
