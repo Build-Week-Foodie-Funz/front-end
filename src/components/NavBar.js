@@ -18,6 +18,8 @@ const Navigation = styled.nav`
 
 const NavItem = styled.a`
 	margin: 10px;
+	color: white;
+	// font-family: "Chinese Rocks';
 `;
 
 const LogoImage = styled.img`
@@ -28,8 +30,9 @@ const LogoImage = styled.img`
 const LogoText = styled.a`
 	color: white;
 	font-size: 1.5rem;
-	margin-right: 64%;
-	width: 150px;
+	margin-right: 63%;
+	width: 20%;
+	font-family: Helvetica;
 `;
 
 const NavigationBar = () => {
@@ -38,9 +41,9 @@ const NavigationBar = () => {
 			<LogoImage src={Logo} />
 			<LogoText>Foodie Fun</LogoText>
 			<Navigation>
-				<NavItem>Login</NavItem>
-				<NavItem>marketing</NavItem>
-				<NavItem>Sign Up</NavItem>
+				<NavItem href="/">Login</NavItem>
+				<NavItem href="/home">Marketing</NavItem>
+				<NavItem href="signup">Sign Up</NavItem>
 			</Navigation>
 		</NavContainer>
 	);

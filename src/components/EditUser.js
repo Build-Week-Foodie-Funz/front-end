@@ -16,23 +16,19 @@ import styled from "styled-components";
 import profilePicture from "../images/defaultuser.png";
 
 const WarningText = styled.p`
-	color: $background;
+	color: red;
 `;
 
 const UserContainer = styled.div`
-	background-color: $background;
 	width: 100%;
 	display: flex;
 `;
 
 const UserInput = styled.div`
 	padding-left: 10px;
-	color: red;
-	// height: 50px;
 `;
 
 const InputContainer = styled.div`
-	background-color: #fbfcee;
 	width: 50%;
 `;
 

@@ -16,10 +16,19 @@ import SignUp from "./components/SignUp";
 import FoodItem from "./components/FoodItem";
 import "./styles.scss";
 import NavBar from "./components/NavBar";
+import { createGlobalStyle } from "styled-components";
+
+// If you need to style anything across the app please put it here
+const GlobalStyles = createGlobalStyle`
+  body{
+    background-color: #fbfcee;
+  }
+`;
 
 function App() {
 	return (
 		<Router>
+			<GlobalStyles />
 			<NavBar />
 			<div className="App">
 				<Route exact path="/" component={Login} />
