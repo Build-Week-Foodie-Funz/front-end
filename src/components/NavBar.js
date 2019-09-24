@@ -6,7 +6,6 @@ const NavContainer = styled.div`
 	background-color: #db832d;
 	display: flex;
 	height: 50px;
-	justify-content: flex-end;
 	align-items: center;
 `;
 
