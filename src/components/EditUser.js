@@ -16,23 +16,19 @@ import styled from "styled-components";
 import profilePicture from "../images/defaultuser.png";
 
 const WarningText = styled.p`
-	color: $background;
+	color: red;
 `;
 
 const UserContainer = styled.div`
-	background-color: $background;
 	width: 100%;
 	display: flex;
 `;
 
 const UserInput = styled.div`
 	padding-left: 10px;
-	color: red;
-	// height: 50px;
 `;
 
 const InputContainer = styled.div`
-	background-color: #fbfcee;
 	width: 50%;
 `;
 
@@ -82,60 +78,66 @@ const EditUser = props => {
 	};
 
 	return (
-		<Form id="update-form">
-			<UserContainer>
-				<InputContainer>
-					<h2>UPDATE PROFILE:</h2>
-					<WarningText>
-						'' Please only change the field that you want updated, leave
-						the rest empty.
-					</WarningText>
-					<UserInput>
-						<StyledField
-							id="username-input"
-							type="text"
-							name="username"
-							placeholder="Username"
-							onChange={updateUserInfo}
-						/>
-					</UserInput>
-					<UserInput>
-						<StyledField type="email" name="email" placeholder="Email" />
-					</UserInput>
-					<UserInput>
-						<StyledField
-							id="password-input"
-							type="password"
-							name="password"
-							placeholder="Password"
-							onChange={updateUserInfo}
-						/>
-					</UserInput>
-					<UserInput>
-						<StyledField
-							id="location-input"
-							type="text"
-							name="location"
-							placeholder="Location"
-							onChange={updateUserInfo}
-						/>
-					</UserInput>
-				</InputContainer>
-				<ButtonContainer>
-					<UserImage src={profilePicture}></UserImage>
-					<button type="submit">Update Profile</button>
-					<button
-						onClick={
-							(window.onload = function() {
-								document.getElementById("update-form").reset();
-							})
-						}
-					>
-						Reset changes
-					</button>
-				</ButtonContainer>
-			</UserContainer>
-		</Form>
+		<>
+			<Form id="update-form">
+				<UserContainer>
+					<InputContainer>
+						<h2>UPDATE PROFILE:</h2>
+						<WarningText>
+							'' Please only change the field that you want updated,
+							leave the rest empty.
+						</WarningText>
+						<UserInput>
+							<StyledField
+								id="username-input"
+								type="text"
+								name="username"
+								placeholder="Username"
+								onChange={updateUserInfo}
+							/>
+						</UserInput>
+						<UserInput>
+							<StyledField
+								type="email"
+								name="email"
+								placeholder="Email"
+							/>
+						</UserInput>
+						<UserInput>
+							<StyledField
+								id="password-input"
+								type="password"
+								name="password"
+								placeholder="Password"
+								onChange={updateUserInfo}
+							/>
+						</UserInput>
+						<UserInput>
+							<StyledField
+								id="location-input"
+								type="text"
+								name="location"
+								placeholder="Location"
+								onChange={updateUserInfo}
+							/>
+						</UserInput>
+					</InputContainer>
+					<ButtonContainer>
+						<UserImage src={profilePicture}></UserImage>
+						<button type="submit">Update Profile</button>
+						<button
+							onClick={
+								(window.onload = function() {
+									document.getElementById("update-form").reset();
+								})
+							}
+						>
+							Reset changes
+						</button>
+					</ButtonContainer>
+				</UserContainer>
+			</Form>
+		</>
 	);
 };
 
