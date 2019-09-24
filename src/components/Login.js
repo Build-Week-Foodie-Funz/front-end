@@ -74,6 +74,13 @@ const Login = props => {
           </form>
         </div>
       </section>
+      <div class='waves'>
+        <div class='wave -one'></div>
+        <div class='wave -two'></div>
+        <div class='wave -three'></div>
+        <div class='wave -four'></div>
+        <div class='wave -five'></div>
+      </div>
     </StyledDiv>
   );
 };
