@@ -13,6 +13,7 @@ import { Form, Field, withFormik } from "formik";
 import styled from "styled-components";
 import * as Yup from "yup";
 import axios from "axios";
+import "../styles/button.scss";
 
 const UserContainer = styled.div`
   background-color: #fbfcee;
@@ -22,7 +23,7 @@ const UserContainer = styled.div`
 const UserInput = styled.div`
   padding-left: 10px;
   color: red;
-  // height: 50px;
+  height: 50px;
 `;
 const InputContainer = styled.div`
   background-color: #fbfcee;
@@ -41,7 +42,7 @@ const StyledField = styled.input`
 const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 18%;
+  width: 45%;
   margin: 0 auto;
 `;
 
@@ -59,7 +60,7 @@ const SignUp = ({ errors, status, value, touched }) => {
       <Form>
         <InputContainer>
           <UserInput>
-            <StyledField type="text" name="username" placeholder="Username" />
+            <StyledField type="text" name="username" placeholder="Username:" />
             {touched.username && errors.username && (
               <p classname="error">{errors.username}</p>
             )}
@@ -68,7 +69,7 @@ const SignUp = ({ errors, status, value, touched }) => {
             <StyledField
               name="email"
               type="email"
-              placeholder="Email address"
+              placeholder="Email address:"
             />
             {touched.email && errors.email && (
               <p className="error">{errors.email}</p>
@@ -78,7 +79,7 @@ const SignUp = ({ errors, status, value, touched }) => {
             <StyledField
               name="password"
               type="password"
-              placeholder="Enter Your Password"
+              placeholder="Enter Your Password:"
             />
             {touched.password && errors.password && (
               <p className="error">{errors.password}</p>
@@ -96,7 +97,7 @@ const SignUp = ({ errors, status, value, touched }) => {
           <button className="btn" type="submit">
             Sign Up
           </button>
-          <button className="btn" type="submit">
+          <button className="btn-2" type="submit">
             Sign In
           </button>
         </ButtonContainer>
