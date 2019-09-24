@@ -18,11 +18,11 @@ import mobile from "../images/mobile-login.svg";
 
 const StyledDiv = styled.div`
   width: 100%;
-  
-  
+  display: flex;
+  flex-direction: column;
 
   .mid-section {
-    width: 700px;
+    width: 950px;
     margin: 0 auto;
     color: green;
     display: flex;
@@ -30,7 +30,8 @@ const StyledDiv = styled.div`
     align-items: center;
 
     img {
-      width: 30rem;
+      width: 400px;
+      margin-top: 50px;
     }
   }
 
@@ -61,7 +62,7 @@ const StyledDiv = styled.div`
       border-radius: 43%;
       animation: drift 5000ms infinite linear;
 
-      &.-two {
+      &.-one {
         left: -10em;
         margin: 0;
       }
@@ -70,6 +71,44 @@ const StyledDiv = styled.div`
         animation: drift 8000ms infinite linear;
         left: 30em;
       }
+
+      &.-two {
+        animation: drift 5000ms infinite linear;
+        opacity: .15;
+        left: 50em;
+      }
+
+      &.-four {
+        animation: drift 8000ms infinite linear;
+        opacity: .26;
+        left: -20em;
+        margin: 0;
+      }
+
+      &.-five {
+        animation: drift 3000ms infinite linear;
+        opacity: 0.3;
+        // margin-right: 90%;
+      }
+
+      @keyframes drift {
+  from { transform: rotate(0deg); }
+  from { transform: rotate(360deg); }
+}
+
+
+    }
+
+    &:after {
+      content: '';
+      display: block;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      // background: linear-gradient(to bottom, rgba(yellow, 0.15), rgba(#def, 0) 70%, rgba(white, .5));
+      z-index: 11;
+      transform: translate3d(0, 0, 0);
     }
   }
 
