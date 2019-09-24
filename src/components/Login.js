@@ -17,11 +17,13 @@ import mobile from "../images/mobile-login.svg";
 
 
 const StyledDiv = styled.div`
+  width: 100%;
   
-  width: 900px;
-  margin: 0 auto;
+  
 
   .mid-section {
+    width: 700px;
+    margin: 0 auto;
     color: green;
     display: flex;
     justify-content: space-between;
@@ -29,6 +31,45 @@ const StyledDiv = styled.div`
 
     img {
       width: 30rem;
+    }
+  }
+
+  .waves {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40vh;
+    border-radius: 5px;
+    box-shadow: 0 2px 30px rgba(black, .2);
+    background: lighten(#f0f4c3, 10%);
+    position: relative;
+    overflow: hidden;
+    transform: translate3d(0, 0, 0);
+
+    .wave {
+      opacity: .4;
+      position: absolute;
+      top: 70%;
+      // left: 20%;
+      right: 0;
+      left: 0;
+      background: #d47019;
+      width: 60em;
+      height: 1100px;
+      transform-origin: 50% 50%;
+      border-radius: 43%;
+      animation: drift 5000ms infinite linear;
+
+      &.-two {
+        left: -10em;
+        margin: 0;
+      }
+
+      &.-three {
+        animation: drift 8000ms infinite linear;
+        left: 30em;
+      }
     }
   }
 
