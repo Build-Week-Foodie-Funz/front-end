@@ -5,34 +5,46 @@ import Logo from "../images/logo.svg";
 const NavContainer = styled.div`
 	background-color: #db832d;
 	display: flex;
-	width: 100%;
 	height: 50px;
-	justify-content: flex-end;
 	align-items: center;
 `;
 
 const Navigation = styled.nav`
 	margin-right: 5%;
-	width: 30%;
+	width: 300px;
+	@media (min-width: 500px) {
+		margin-right: -37%;
+		padding-right: 20%;
+	}
+	@media (min-width: 1200px) {
+		margin: 0 auto;
+		padding: 0;
+		margin-right: -5%;
+	}
 `;
 
 const NavItem = styled.a`
-	margin: 10px;
+	text-decoration: none;
 	color: white;
-	// font-family: "Chinese Rocks';
+	@media (min-width: 500px) {
+		margin: 5px;
+	}
 `;
 
 const LogoImage = styled.img`
 	height: 40px;
-	margin-right: 1%;
+	margin-left: 1%;
 `;
 
 const LogoText = styled.a`
+	display: flex;
+	fustify-content: flex-e
+	text-decoration: none;
 	color: white;
 	font-size: 1.5rem;
-	margin-right: 63%;
-	width: 20%;
-	font-family: Helvetica;
+	width: 200px;
+	margin-right: 5%;
+	float: right;
 `;
 
 const NavigationBar = () => {
@@ -43,7 +55,7 @@ const NavigationBar = () => {
 			<Navigation>
 				<NavItem href="/">Login</NavItem>
 				<NavItem href="/home">Marketing</NavItem>
-				<NavItem href="signup">Sign Up</NavItem>
+				<NavItem href="signup">Sign-Up</NavItem>
 			</Navigation>
 		</NavContainer>
 	);
