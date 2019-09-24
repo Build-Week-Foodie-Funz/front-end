@@ -128,9 +128,6 @@ const EditUser = ({ touched, errors, status }) => {
 								placeholder="Password"
 								onChange={updateUserInfo}
 							/>
-							{touched.password && errors.password && (
-								<ErrorMessageText>{errors.password}</ErrorMessageText>
-							)}
 						</UserInput>
 						<UserInput>
 							<StyledField
@@ -173,11 +170,11 @@ const FormikEditUser = withFormik({
 			password: password || ""
 		};
 	},
-	validationSchema: Yup.object().shape({
-		password: Yup.string(5).required(
-			"Password must be at least 5 characters long"
-		)
-	}),
+	// validationSchema: Yup.object().shape({
+	// 	password: Yup.string(5).required(
+	// 		"Password must be at least 5 characters long"
+	// 	)
+	// }),
 	handleSubmit(values, { setStatus }) {
 		axios
 			.post("", values)
