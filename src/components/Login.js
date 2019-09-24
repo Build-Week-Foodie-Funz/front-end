@@ -12,6 +12,13 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { getInitialData } from "../actions/actions";
+import styled from "styled-components";
+
+
+const StyledDiv = styled.div`
+  color: green;
+  
+`
 
 const Login = props => {
   const [credentials, setCredentials] = useState({});
@@ -29,8 +36,8 @@ const Login = props => {
   };
 
   return (
-    <div>
-      <h1>Welcome to the Bubble App!</h1>
+    <StyledDiv>
+      <h1>SIGN IN</h1>
       <form onSubmit={login}>
         <input
           type="text"
@@ -46,7 +53,7 @@ const Login = props => {
         />
         <button>Log in</button>
       </form>
-    </div>
+    </StyledDiv>
   );
 };
 
