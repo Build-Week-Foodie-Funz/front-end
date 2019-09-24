@@ -13,10 +13,26 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { getInitialData } from "../actions/actions";
 import styled from "styled-components";
+import mobile from "../images/mobile-login.svg";
 
 
 const StyledDiv = styled.div`
-  color: green;
+  
+  width: 900px;
+  margin: 0 auto;
+
+  .mid-section {
+    color: green;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    img {
+      width: 30rem;
+    }
+  }
+
+  
   
 `
 
@@ -37,22 +53,27 @@ const Login = props => {
 
   return (
     <StyledDiv>
-      <h1>SIGN IN</h1>
-      <form onSubmit={login}>
-        <input
-          type="text"
-          name="username"
-          value={credentials.username}
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          name="password"
-          value={credentials.password}
-          onChange={handleChange}
-        />
-        <button>Log in</button>
-      </form>
+      <section class="mid-section">
+        <img src={mobile} />
+        <div class="login-section">
+          <h1>SIGN IN</h1>
+          <form onSubmit={login}>
+            <input
+              type="text"
+              name="username"
+              value={credentials.username}
+              onChange={handleChange}
+            />
+            <input
+              type="password"
+              name="password"
+              value={credentials.password}
+              onChange={handleChange}
+            />
+            <button>Log in</button>
+          </form>
+        </div>
+      </section>
     </StyledDiv>
   );
 };
