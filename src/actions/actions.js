@@ -34,10 +34,20 @@ export const EDIT_COLOR_FAIL = "EDIT_COLOR_FAIL";
 export const getInitialData = (props, history) => dispatch => {
   dispatch({ type: INITIAL_FETCH_START });
   axiosWithAuth()
-    .post("http://localhost:5000/api/login", props)
+    .post(
+      "https://sethnadu-foodie-bw.herokuapp.com/login",
+      `grant_type=password&username=${props.username}&password=${props.password}`,
+      {
+        headers: {
+          Authorization: `Basic ${btoa("lambda-client:lambda-secret")}`,
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
+      }
+    )
     .then(res => {
-      localStorage.setItem("token", res.data.payload);
-      history.push("/bubbles");
+      console.log("response from initial", res);
+      localStorage.setItem("token", res.data.access_token);
+      history.push("/"); // Leads back to the dahsboard
       dispatch({ type: INITIAL_FETCH_SUCCESS, payload: res.data });
     })
     .catch(err => dispatch({ type: INITIAL_FETCH_FAIL, payload: err }));

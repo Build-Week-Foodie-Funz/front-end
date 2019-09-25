@@ -27,7 +27,6 @@ import {
 } from "../actions/actions";
 
 const initialState = {
-  colors: [],
   user: {},
   error: "",
   isFetching: false
@@ -45,7 +44,6 @@ function reducer(state = initialState, action) {
     case DELETE_COLOR_SUCCESS:
       return {
         ...state,
-
         isFetching: false,
         error: ""
       };
