@@ -54,6 +54,7 @@ const SignUp = ({ errors, status, value, touched }) => {
 		}
 	}, [status]);
 
+<<<<<<< HEAD
 	return (
 		<UserContainer>
 			<div class="header">Sign Up</div>
@@ -154,6 +155,100 @@ const UserLogin = withFormik({
 				console.log(err.response);
 			});
 	}
+=======
+  return (
+    <UserContainer>
+      <div class="header">Sign Up</div>
+      <Form>
+        <InputContainer>
+          <UserInput>
+            <StyledField type="text" name="username" placeholder="Username:" />
+            {touched.username && errors.username && (
+              <p classname="error">{errors.username}</p>
+            )}
+          </UserInput>
+          <UserInput>
+            <StyledField
+              name="email"
+              type="email"
+              placeholder="Email address:"
+            />
+            {touched.email && errors.email && (
+              <p className="error">{errors.email}</p>
+            )}
+          </UserInput>
+          <UserInput>
+            <StyledField
+              name="password"
+              type="password"
+              placeholder="Enter Your Password:"
+            />
+            {touched.password && errors.password && (
+              <p className="error">{errors.password}</p>
+            )}
+          </UserInput>
+          <UserInput>
+            <StyledField name="area" type="location" placeholder="Location" />
+            {touched.area && errors.area && (
+              <p className="error">{errors.area}</p>
+            )}
+          </UserInput>
+        </InputContainer>
+        Forgot password? <a href="#">reset</a>
+        <ButtonContainer>
+          <div className="btn" type="submit">
+            Sign Up
+          </div>
+          <div className="btn-2" type="submit">
+            Sign In
+          </div>
+        </ButtonContainer>
+      </Form>
+      {users.map(item => (
+        <ul key={item.id}>
+          <li>Nickname:{item.nickname}</li>
+          <li>Email:{item.email}</li>
+          <li>Password:{item.password}</li>
+          <li>Location:{item.location}</li>
+        </ul>
+      ))}
+    </UserContainer>
+  );
+};
+const UserLogin = withFormik({
+  mapPropsToValues({ username, email, password, location }) {
+    return {
+      username: username || "",
+      email: email || "",
+      password: password || "",
+      location: location || ""
+    };
+  },
+
+  validationSchema: Yup.object().shape({
+    username: Yup.string()
+      .required("Enter your Username.")
+      .min(5),
+    email: Yup.string()
+      .email()
+      .required("Enter your email address."),
+    password: Yup.string()
+      .required("Enter your password.")
+      .min(8, "Too short, please enter at least eight (8) characters.")
+  }),
+
+  handleSubmit(values, { setStatus }) {
+    axios
+      .post("", values)
+      .then(response => {
+        console.log(response);
+        setStatus(response.data);
+      })
+      .catch(err => {
+        console.log(err.response);
+      });
+  }
+>>>>>>> b9f00bc6570ebddb84d39254ce56ba3d59c005d4
 })(SignUp);
 
 export default UserLogin;

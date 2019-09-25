@@ -6,7 +6,6 @@
  * Code's purpose: Allows to hide all private links that should be available
  * once a user signs in.
  */
-
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 

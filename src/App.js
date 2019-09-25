@@ -14,9 +14,11 @@ import FormikEditUser from "./components/EditUser";
 import FoodForm from "./components/FoodForm";
 import SignUp from "./components/SignUp";
 import FoodItem from "./components/FoodItem";
+import ResetPassword from "./components/ResetPassword";
 import "./styles.scss";
 import NavBar from "./components/NavBar";
 import { createGlobalStyle } from "styled-components";
+import FormikCreateRest from "./components/CreateRest";
 
 // If you need to style anything across the app please put it here
 const GlobalStyles = createGlobalStyle`
@@ -37,7 +39,9 @@ function App() {
 				<Route path="/dashboard" component={Dashboard} />
 				<Route path="/foodform/:id" component={FoodForm} />
 				<Route path="/editprofile/" component={FormikEditUser} />
+				<Route path="/reset/" component={ResetPassword} />
 				<Route path="/fooditem/:id" component={FoodItem} />
+				<Route path="/addrestaurant" component={FormikCreateRest} />
 				{/* These four above will be converted to PrivateRouters*/}
 			</div>
 		</Router>
