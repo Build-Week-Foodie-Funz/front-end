@@ -17,6 +17,8 @@ import mobile from "../images/mobile-login.svg";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { NavLink, Route } from "react-router-dom";
 import SignUp from "./SignUp";
+import * as yup from "yup";
+import { convertCompilerOptionsFromJson } from "typescript";
 
 
 const StyledDiv = styled.div`
@@ -120,13 +122,17 @@ const StyledDiv = styled.div`
   }  
 `
 
-const initialCredentials = {
-  email: '',
-  password: '',
-};
+
 
 const Login = props => {
+
+  const initialCredentials = {
+    email: '',
+    password: '',
+  };
+
   const [credentials, setCredentials] = useState(initialCredentials);
+  console.log(credentials);
 
   const login = e => {
     e.preventDefault();
@@ -134,11 +140,19 @@ const Login = props => {
   };
 
   const handleChange = e => {
+    console.log('here')
     setCredentials({
       ...credentials,
       [e.target.name]: e.target.value
     });
   };
+
+
+
+  const validation = yup.object().shape({
+    email: yup.string().email().required('Please enter an email'),
+    password: yup.string().required(),
+  })
 
   return (
     <StyledDiv>
@@ -147,28 +161,35 @@ const Login = props => {
         <div class="login-section">
           <h1>SIGN IN</h1>
           <Formik
+            validationSchema={validation}
             onSubmit={login}
             initialValues={initialCredentials}
             render={props => {
               return (
                 <Form>
-                  <Field
-                    type="text"
-                    name="username"
-                    placeholder="Email"
-                    value={credentials.username}
-                    onChange={handleChange}
-                  />
-                  <Field
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    value={credentials.password}
-                    onChange={handleChange}
-                  />
+                  <div>
+                    <Field
+                      type="email"
+                      name="email"
+                      placeholder="Email"
+                      value={credentials.email}
+                      onChange={handleChange}
+                    />
+                    <ErrorMessage name="email" component="div" />
+                  </div>
+                  <div>
+                    <Field
+                      type="password"
+                      name="password"
+                      placeholder="Password"
+                      value={credentials.password}
+                      onChange={handleChange}
+                    />
+                    <ErrorMessage name="password" component="div" />
+                  </div>
                   <button type="submit">Sign in</button>
                   <NavLink to="/signup">
-                  <button>Sign up</button>
+                    <button>Sign up</button>
                   </NavLink>
                   <Route path="/signup" component={SignUp} />
                 </Form>
