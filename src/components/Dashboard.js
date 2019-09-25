@@ -10,3 +10,11 @@
  *  - Populates a list of all the summary items, once clicked links to a separate
  *    component `FoodItem.js`
  */
+
+import React, { useState } from "react";
+
+const Dashboard = () => {
+  return <h1>Imagine a Dashboard</h1>;
+};
+
+export default Dashboard;
