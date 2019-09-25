@@ -15,6 +15,8 @@ import { getInitialData } from "../actions/actions";
 import styled from "styled-components";
 import mobile from "../images/mobile-login.svg";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { NavLink, Route } from "react-router-dom";
+import SignUp from "./SignUp";
 
 
 const StyledDiv = styled.div`
@@ -153,17 +155,22 @@ const Login = props => {
                   <Field
                     type="text"
                     name="username"
+                    placeholder="Email"
                     value={credentials.username}
                     onChange={handleChange}
                   />
                   <Field
                     type="password"
                     name="password"
+                    placeholder="Password"
                     value={credentials.password}
                     onChange={handleChange}
                   />
-                  <button>Sign in</button>
+                  <button type="submit">Sign in</button>
+                  <NavLink to="/signup">
                   <button>Sign up</button>
+                  </NavLink>
+                  <Route path="/signup" component={SignUp} />
                 </Form>
               )
             }}
