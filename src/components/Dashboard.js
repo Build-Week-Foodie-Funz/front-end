@@ -11,11 +11,14 @@
  *    component `FoodItem.js`
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { axiosWithAuth } from '../axios/axiosWithAuth';
 import { userInfo } from "os";
 import styled from 'styled-components';
+import { connect } from "react-redux";
+import { getUser } from "../actions/actions";
+
 
 const FoodPicture = styled.img`
   width: 100px;
@@ -70,13 +73,38 @@ const Header = styled.header`
   }
 `;
 
-const Dashboard = () => {
+const RestCards = styled.div`
+  width: 30%;
+  Height: 530px;
+  border: 1px solid black;
+  img{
+    width: 300px;
+    height: 300px;
+  }
+`;
+
+
+
+const Dashboard = props => {
+  const [userInformation, setUserInformation] = useState();
+
+
+  // console.log("user data", userInformation);
+  // console.log(userInformation)
+  useEffect(() => {
+    setUserInformation(props.getUser())
+    // console.log('THIS IS YOUR USERDATA LOADING', props.getUser())
+  }, []);
+
+
+  // window.onload = setUserData(mapStateToProps);
+  console.log('This is REst', props.user.restaurant)
   return (
     <PageContainer>
       <Header>
         <HeaderImage src='https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'></HeaderImage>
         <ProfileImage src='https://images.unsplash.com/photo-1512794268250-65fd4cd7441f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80'></ProfileImage>
-        <UsersName>Hello, John Smith!</UsersName>
+        <UsersName>Hello, {props.user.username}!</UsersName>
         <a href='/editprofile'>Edit Profile</a>
         <a href='/foodform'>Add Review</a>
 
@@ -86,29 +114,24 @@ const Dashboard = () => {
         <input type='text' name='cusinetype' placeholder='Type of food' />
         <input type='text' name='priceoffood' placeholder='Price' />
       </SearchForms>
-      <div className='cards'>
-        <FoodPicture src='https://images.unsplash.com/photo-1557872943-16a5ac26437e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1316&q=80'></FoodPicture>
-        <h3>Rest Name</h3>
-        <h4>Cuisine Type</h4>
-        <p>Price</p>
-        <p>Rating: 9001</p>
-        <button>View reviews</button>
-      </div>
+      <RestCards>
+        {/* <FoodPicture src='https://images.unsplash.com/photo-1557872943-16a5ac26437e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1316&q=80'></FoodPicture> */}
+        {props.user.restaurant ? props.user.restaurant.map((rest) => {
+          return (
+            <>
+              <h3>{rest.restname}</h3>
+              <img src={rest.restphotos[1].photo}></img>
+              <h4>Horus: {rest.resthours}</h4>
+              <p>Location: {rest.restlocation}</p>
+              <button rest={rest} src='/reviews'>View reviews</button>
+            </>)
+        }) : null}
+        <h2>{props.user.username}</h2>
+      </RestCards>
+      {/* <button onClick={() => console.log("on button press", props.getUser())}>Get user</button> */}
     </PageContainer>
-
-//import { connect } from "react-redux";
-//import { getUser } from "../actions/actions";
-
-//const Dashboard = props => {
-  //console.log("user data", props.user);
-  //return (
-    //<>
-      //<h1>Imagine a Dashboard</h1>
-      //<button onClick={() => props.getUser()}>Get user</button>
-   // </>
-
- // );
-//};
+  );
+};
 
 const mapStateToProps = state => {
   return {
