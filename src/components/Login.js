@@ -14,12 +14,10 @@ import { connect } from "react-redux";
 import { getInitialData } from "../actions/actions";
 import styled from "styled-components";
 import mobile from "../images/mobile-login.svg";
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import { NavLink, Route } from "react-router-dom";
 import SignUp from "./SignUp";
 import * as yup from "yup";
-import { convertCompilerOptionsFromJson } from "typescript";
-
 
 const StyledDiv = styled.div`
   width: 100%;
@@ -40,7 +38,6 @@ const StyledDiv = styled.div`
     }
 
     .login-section {
-
       width: 300px;
       button {
         width: 40%;
@@ -55,14 +52,14 @@ const StyledDiv = styled.div`
     align-items: center;
     height: 40vh;
     border-radius: 5px;
-    box-shadow: 0 2px 30px rgba(black, .2);
+    box-shadow: 0 2px 30px rgba(black, 0.2);
     background: lighten(#f0f4c3, 10%);
     position: relative;
     overflow: hidden;
     transform: translate3d(0, 0, 0);
 
     .wave {
-      opacity: .4;
+      opacity: 0.4;
       position: absolute;
       top: 70%;
       // left: 20%;
@@ -87,13 +84,13 @@ const StyledDiv = styled.div`
 
       &.-two {
         animation: drift 5000ms infinite linear;
-        opacity: .15;
+        opacity: 0.15;
         left: 50em;
       }
 
       &.-four {
         animation: drift 8000ms infinite linear;
-        opacity: .26;
+        opacity: 0.26;
         left: -20em;
         margin: 0;
       }
@@ -105,30 +102,31 @@ const StyledDiv = styled.div`
       }
 
       @keyframes drift {
-        from { transform: rotate(0deg); }
-        from { transform: rotate(360deg); }
+        from {
+          transform: rotate(0deg);
+        }
+        from {
+          transform: rotate(360deg);
+        }
       }
     }
     &:after {
-      content: '';
+      content: "";
       display: block;
       left: 0;
       top: 0;
       width: 100%;
-      height: 100%;      
+      height: 100%;
       z-index: 11;
       transform: translate3d(0, 0, 0);
     }
-  }  
-`
-
-
+  }
+`;
 
 const Login = props => {
-
   const initialCredentials = {
-    email: '',
-    password: '',
+    username: "",
+    password: ""
   };
 
   const [credentials, setCredentials] = useState(initialCredentials);
@@ -140,19 +138,17 @@ const Login = props => {
   };
 
   const handleChange = e => {
-    console.log('here')
+    console.log("here", credentials);
     setCredentials({
       ...credentials,
       [e.target.name]: e.target.value
     });
   };
 
-
-
   const validation = yup.object().shape({
-    email: yup.string().email().required('Please enter an email'),
-    password: yup.string().required(),
-  })
+    //Add username varification
+    password: yup.string().required()
+  });
 
   return (
     <StyledDiv>
@@ -162,20 +158,20 @@ const Login = props => {
           <h1>SIGN IN</h1>
           <Formik
             validationSchema={validation}
-            onSubmit={login}
+            onSubmit={props.getInitialData(credentials, props.history)}
             initialValues={initialCredentials}
             render={props => {
               return (
                 <Form>
                   <div>
                     <Field
-                      type="email"
-                      name="email"
-                      placeholder="Email"
-                      value={credentials.email}
+                      type="username"
+                      name="username"
+                      placeholder="Username"
+                      value={credentials.username}
                       onChange={handleChange}
                     />
-                    <ErrorMessage name="email" component="div" />
+                    <ErrorMessage name="username" component="div" />
                   </div>
                   <div>
                     <Field
@@ -188,7 +184,7 @@ const Login = props => {
                     <ErrorMessage name="password" component="div" />
                   </div>
                   <div>
-                    <span>Forgot Password?</span>                    
+                    <span>Forgot Password?</span>
                     <NavLink to="/reset">Reset</NavLink>
                   </div>
                   <button type="submit">Sign in</button>
@@ -197,18 +193,18 @@ const Login = props => {
                   </NavLink>
                   <Route path="/signup" component={SignUp} />
                 </Form>
-              )
+              );
             }}
           />
         </div>
       </section>
 
-      <div class='waves'>
-        <div class='wave -one'></div>
-        <div class='wave -two'></div>
-        <div class='wave -three'></div>
-        <div class='wave -four'></div>
-        <div class='wave -five'></div>
+      <div class="waves">
+        <div class="wave -one"></div>
+        <div class="wave -two"></div>
+        <div class="wave -three"></div>
+        <div class="wave -four"></div>
+        <div class="wave -five"></div>
       </div>
     </StyledDiv>
   );

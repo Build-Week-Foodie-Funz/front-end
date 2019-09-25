@@ -28,24 +28,25 @@ const GlobalStyles = createGlobalStyle`
 `;
 
 function App() {
-	return (
-		<Router>
-			<GlobalStyles />
-			<NavBar />
-			<div className="App">
-				<Route exact path="/" component={Login} />
-				<Route path="/signup" component={SignUp} />
-				{/* These four below will be converted to PrivateRouters*/}
-				<Route path="/dashboard" component={Dashboard} />
-				<Route path="/foodform/:id" component={FoodForm} />
-				<Route path="/editprofile/" component={FormikEditUser} />
-				<Route path="/reset/" component={ResetPassword} />
-				<Route path="/fooditem/:id" component={FoodItem} />
-				<Route path="/addrestaurant" component={FormikCreateRest} />
-				{/* These four above will be converted to PrivateRouters*/}
-			</div>
-		</Router>
-	);
+  return (
+    <Router>
+      <GlobalStyles />
+      <NavBar />
+      <div className="App">
+        <Route exact path="/" component={Dashboard} />
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={SignUp} />
+        {/* These four below will be converted to PrivateRouters*/}
+
+        <Route path="/foodform/:id" component={FoodForm} />
+        <Route path="/editprofile/" component={FormikEditUser} />
+        <Route path="/reset/" component={ResetPassword} />
+        <Route path="/fooditem/:id" component={FoodItem} />
+        <Route path="/addrestaurant" component={FormikCreateRest} />
+        {/* These four above will be converted to PrivateRouters*/}
+      </div>
+    </Router>
+  );
 }
 
 export default App;
