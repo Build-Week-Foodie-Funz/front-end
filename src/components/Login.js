@@ -26,12 +26,20 @@ const StyledDiv = styled.div`
     margin: 0 auto;
     color: green;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
 
     img {
       width: 400px;
-      margin-top: 50px;
+      margin-top: 20px;
+    }
+
+    .login-section {
+
+      width: 300px;
+      button {
+        width: 40%;
+      }
     }
   }
 
@@ -92,28 +100,21 @@ const StyledDiv = styled.div`
       }
 
       @keyframes drift {
-  from { transform: rotate(0deg); }
-  from { transform: rotate(360deg); }
-}
-
-
+        from { transform: rotate(0deg); }
+        from { transform: rotate(360deg); }
+      }
     }
-
     &:after {
       content: '';
       display: block;
       left: 0;
       top: 0;
       width: 100%;
-      height: 100%;
-      // background: linear-gradient(to bottom, rgba(yellow, 0.15), rgba(#def, 0) 70%, rgba(white, .5));
+      height: 100%;      
       z-index: 11;
       transform: translate3d(0, 0, 0);
     }
-  }
-
-  
-  
+  }  
 `
 
 const Login = props => {
@@ -150,7 +151,8 @@ const Login = props => {
               value={credentials.password}
               onChange={handleChange}
             />
-            <button>Log in</button>
+            <button>Sign in</button>
+            <button>Sign up</button>
           </form>
         </div>
       </section>
