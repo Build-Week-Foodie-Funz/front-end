@@ -132,10 +132,6 @@ const Login = props => {
   const [credentials, setCredentials] = useState(initialCredentials);
   console.log(credentials);
 
-  const login = e => {
-    e.preventDefault();
-    props.getInitialData(credentials, props.history);
-  };
 
   const handleChange = e => {
     console.log("here", credentials);
@@ -146,7 +142,7 @@ const Login = props => {
   };
 
   const validation = yup.object().shape({
-    //Add username varification
+    username: yup.string().min(3).required(),
     password: yup.string().required()
   });
 
