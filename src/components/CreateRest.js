@@ -4,6 +4,13 @@ import { withFormik, Field, Form } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 
+
+const SubmitButton = styled.button`
+	height: 30px;
+	width: 150px;
+	font-size: .9rem
+`;
+
 const CreateRest = props => {
 	const [restUpload, setRestUpload] = useState({
 		// resthours: "",
@@ -56,7 +63,7 @@ const CreateRest = props => {
 					</div>
 				</div>
 			</Form>
-			{/* <button type="submit">Add Restaurant</button> */}
+			<SubmitButton type="submit" className='btn'>Add Restaurant</SubmitButton>
 		</>
 	);
 };

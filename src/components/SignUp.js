@@ -18,34 +18,34 @@ import axios from "axios";
 import "../styles/button.scss";
 
 const UserContainer = styled.div`
-  background-color: #fbfcee;
-  width: 100%;
+	background-color: #fbfcee;
+	width: 100%;
 `;
 
 const UserInput = styled.div`
-  padding-left: 10px;
-  color: red;
-  height: 50px;
+	padding-left: 10px;
+	color: red;
+	height: 50px;
 `;
 const InputContainer = styled.div`
-  background-color: #fbfcee;
+	background-color: #fbfcee;
 `;
 
 const StyledField = styled.input`
-  color: gray;
-  margin: 20px;
-  padding: 5px;
-  padding-left: 15px;
-  width: 200px;
-  height: 2vh;
-  font-size: 1rem;
+	color: gray;
+	margin: 20px;
+	padding: 5px;
+	padding-left: 15px;
+	width: 200px;
+	height: 2vh;
+	font-size: 1rem;
 `;
 
 const ButtonContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 45%;
-  margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	width: 45%;
+	margin: 0 auto;
 `;
 
 const SignUp = props => {
