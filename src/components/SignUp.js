@@ -139,7 +139,7 @@ const UserLogin = withFormik({
       username: username || "",
       email: email || "",
       password: password || "",
-      location: location || ""
+      location: location || "",
     };
   },
 
@@ -152,7 +152,7 @@ const UserLogin = withFormik({
       .required("Enter your email address."),
     password: Yup.string()
       .required("Enter your password.")
-      .min(8, "Too short, please enter at least eight (8) characters.")
+      .min(8, "Too short, please enter at least eight (8) characters."),
   }),
 
   handleSubmit(values, { setStatus }) {
@@ -165,7 +165,7 @@ const UserLogin = withFormik({
       .catch(err => {
         console.log(err.response);
       });
-  }
+  },
 })(SignUp);
 
 export default connect(
