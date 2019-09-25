@@ -118,8 +118,13 @@ const StyledDiv = styled.div`
   }  
 `
 
+const initialCredentials = {
+  email: '',
+  password: '',
+};
+
 const Login = props => {
-  const [credentials, setCredentials] = useState({});
+  const [credentials, setCredentials] = useState(initialCredentials);
 
   const login = e => {
     e.preventDefault();
@@ -139,24 +144,33 @@ const Login = props => {
         <img src={mobile} />
         <div class="login-section">
           <h1>SIGN IN</h1>
-          <form onSubmit={login}>
-            <input
-              type="text"
-              name="username"
-              value={credentials.username}
-              onChange={handleChange}
-            />
-            <input
-              type="password"
-              name="password"
-              value={credentials.password}
-              onChange={handleChange}
-            />
-            <button>Sign in</button>
-            <button>Sign up</button>
-          </form>
+          <Formik
+            onSubmit={login}
+            initialValues={initialCredentials}
+            render={props => {
+              return (
+                <Form>
+                  <Field
+                    type="text"
+                    name="username"
+                    value={credentials.username}
+                    onChange={handleChange}
+                  />
+                  <Field
+                    type="password"
+                    name="password"
+                    value={credentials.password}
+                    onChange={handleChange}
+                  />
+                  <button>Sign in</button>
+                  <button>Sign up</button>
+                </Form>
+              )
+            }}
+          />
         </div>
       </section>
+
       <div class='waves'>
         <div class='wave -one'></div>
         <div class='wave -two'></div>
