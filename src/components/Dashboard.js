@@ -12,6 +12,7 @@
  */
 
 import React, { useState } from "react";
+
 import { axiosWithAuth } from '../axios/axiosWithAuth';
 import { userInfo } from "os";
 import styled from 'styled-components';
@@ -94,7 +95,28 @@ const Dashboard = () => {
         <button>View reviews</button>
       </div>
     </PageContainer>
-  );
+
+//import { connect } from "react-redux";
+//import { getUser } from "../actions/actions";
+
+//const Dashboard = props => {
+  //console.log("user data", props.user);
+  //return (
+    //<>
+      //<h1>Imagine a Dashboard</h1>
+      //<button onClick={() => props.getUser()}>Get user</button>
+   // </>
+
+ // );
+//};
+
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  };
 };
 
-export default Dashboard;
+export default connect(
+  mapStateToProps,
+  { getUser }
+)(Dashboard);

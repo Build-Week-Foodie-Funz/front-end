@@ -132,7 +132,6 @@ const Login = props => {
   const [credentials, setCredentials] = useState(initialCredentials);
   console.log(credentials);
 
-
   const handleChange = e => {
     console.log("here", credentials);
     setCredentials({
@@ -141,10 +140,11 @@ const Login = props => {
     });
   };
 
-  const validation = yup.object().shape({
-    username: yup.string().min(3).required(),
-    password: yup.string().required()
-  });
+
+  // const validation = yup.object().shape({
+  //   username: yup.string().required(),
+  //   password: yup.string().required()
+  // });
 
   return (
     <StyledDiv>
@@ -153,12 +153,16 @@ const Login = props => {
         <div class="login-section">
           <h1>SIGN IN</h1>
           <Formik
-            validationSchema={validation}
-            onSubmit={() => props.getInitialData(credentials, props.history)}
+            // validationSchema={validation}
             initialValues={initialCredentials}
-            render={props => {
+            render={() => {
               return (
-                <Form>
+                <Form
+                  onSubmit={e => {
+                    e.preventDefault();
+                    return props.getInitialData(credentials, props.history);
+                  }}
+                >
                   <div>
                     <Field
                       type="username"
