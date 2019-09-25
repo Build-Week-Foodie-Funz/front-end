@@ -35,11 +35,22 @@ const ProfileImage = styled.img`
   height: 200px;
   border-radius: 50%;
   border: 4px solid White;
+  margin-left: 30px;
 `;
 
 const UsersName = styled.h2`
   font-size: 2rem;
-  margin-right: 55%;
+  width: 400px;
+  
+`;
+
+const SearchForms = styled.div`
+// position: absolute;
+float: right;
+width: 100%;
+  input{
+    margin: 0 20px 0;
+  }
 `;
 
 const PageContainer = styled.div`
@@ -48,6 +59,14 @@ const PageContainer = styled.div`
 
 const Header = styled.header`
   width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  a{
+    position: relative;
+    margin: 20px;
+    float: right;
+    
+  }
 `;
 
 const Dashboard = () => {
@@ -55,16 +74,17 @@ const Dashboard = () => {
     <PageContainer>
       <Header>
         <HeaderImage src='https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'></HeaderImage>
-        {/* <ProfileImage src='https://images.unsplash.com/photo-1512794268250-65fd4cd7441f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80'></ProfileImage> */}
+        <ProfileImage src='https://images.unsplash.com/photo-1512794268250-65fd4cd7441f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80'></ProfileImage>
         <UsersName>Hello, John Smith!</UsersName>
         <a href='/editprofile'>Edit Profile</a>
         <a href='/foodform'>Add Review</a>
+
       </Header>
-      <div className='search-forms'>
+      <SearchForms className='search-forms'>
         <input type='text' name='restsearch' placeholder='Name of Resaurant' />
         <input type='text' name='cusinetype' placeholder='Type of food' />
         <input type='text' name='priceoffood' placeholder='Price' />
-      </div>
+      </SearchForms>
       <div className='cards'>
         <FoodPicture src='https://images.unsplash.com/photo-1557872943-16a5ac26437e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1316&q=80'></FoodPicture>
         <h3>Rest Name</h3>
