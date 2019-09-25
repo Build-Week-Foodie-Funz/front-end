@@ -158,7 +158,7 @@ const Login = props => {
           <h1>SIGN IN</h1>
           <Formik
             validationSchema={validation}
-            onSubmit={props.getInitialData(credentials, props.history)}
+            onSubmit={() => props.getInitialData(credentials, props.history)}
             initialValues={initialCredentials}
             render={props => {
               return (
