@@ -15,21 +15,21 @@ export const INITIAL_FETCH_START = "INITIAL_FETCH_START";
 export const INITIAL_FETCH_SUCCESS = "INITIAL_FETCH_SUCCESS";
 export const INITIAL_FETCH_FAIL = "INITIAL_FETCH_FAIL";
 
-export const COLORS_FETCH_START = "COLORS_FETCH_START";
-export const COLORS_FETCH_SUCCESS = "COLORS_FETCH_SUCCESS";
-export const COLORS_FETCH_FAIL = "COLORS_FETCH_FAIL";
+export const USER_FETCH_START = "USER_FETCH_START";
+export const USER_FETCH_SUCCESS = "USER_FETCH_SUCCESS";
+export const USER_FETCH_FAIL = "USER_FETCH_FAIL";
 
-export const CREATE_COLORS_START = "CREATE_COLORS_START";
-export const CREATE_COLORS_SUCCESS = "CREATE_COLORS_SUCCESS";
-export const CREATE_COLORS_FAIL = "CREATE_COLORS_FAIL";
+export const CREATE_USER_START = "CREATE_USER_START";
+export const CREATE_USER_SUCCESS = "CREATE_USER_SUCCESS";
+export const CREATE_USER_FAIL = "CREATE_USER_FAIL";
 
-export const DELETE_COLOR_START = "DELETE_COLOR_START";
-export const DELETE_COLOR_SUCCESS = "DELETE_COLOR_SUCCESS";
-export const DELETE_COLOR_FAIL = "DELETE_COLOR_FAIL";
+export const DELETE_USER_START = "DELETE_USER_START";
+export const DELETE_USER_SUCCESS = "DELETE_USER_SUCCESS";
+export const DELETE_USER_FAIL = "DELETE_USER_FAIL";
 
-export const EDIT_COLOR_START = "EDIT_COLOR_START";
-export const EDIT_COLOR_SUCCESS = "EDIT_COLOR_SUCCESS";
-export const EDIT_COLOR_FAIL = "EDIT_COLOR_FAIL";
+export const EDIT_USER_START = "EDIT_USER_START";
+export const EDIT_USER_SUCCESS = "EDIT_USER_SUCCESS";
+export const EDIT_USER_FAIL = "EDIT_USER_FAIL";
 
 export const getInitialData = (props, history) => dispatch => {
   dispatch({ type: INITIAL_FETCH_START });
@@ -45,50 +45,50 @@ export const getInitialData = (props, history) => dispatch => {
       }
     )
     .then(res => {
-      console.log("response from initial", res);
       localStorage.setItem("token", res.data.access_token);
-      history.push("/"); // Leads back to the dahsboard
+      history.push("/");
       dispatch({ type: INITIAL_FETCH_SUCCESS, payload: res.data });
     })
     .catch(err => dispatch({ type: INITIAL_FETCH_FAIL, payload: err }));
 };
 
-export const createColors = props => dispatch => {
-  dispatch({ type: CREATE_COLORS_START });
+export const createUser = props => dispatch => {
+  dispatch({ type: CREATE_USER_START });
   axiosWithAuth()
-    .post("http://localhost:5000/api/colors", props)
+    .post("https://sethnadu-foodie-bw.herokuapp.com/createnewuser", props)
     .then(res => {
-      dispatch({ type: CREATE_COLORS_SUCCESS, payload: res.data });
+      console.log("create user respon", res.data);
+      dispatch({ type: CREATE_USER_SUCCESS, payload: res.data });
     })
-    .catch(err => dispatch({ type: CREATE_COLORS_FAIL, payload: err }));
+    .catch(err => dispatch({ type: CREATE_USER_FAIL, payload: err }));
 };
 
-export const getColors = () => dispatch => {
+export const getUSER = () => dispatch => {
   console.log("got here to get");
-  dispatch({ type: COLORS_FETCH_START });
+  dispatch({ type: USER_FETCH_START });
   axiosWithAuth()
-    .get("http://localhost:5000/api/colors")
+    .get("http://localhost:5000/api/USER")
     .then(res => {
-      dispatch({ type: COLORS_FETCH_SUCCESS, payload: res.data });
+      dispatch({ type: USER_FETCH_SUCCESS, payload: res.data });
     })
-    .catch(err => dispatch({ type: COLORS_FETCH_FAIL, payload: err }));
+    .catch(err => dispatch({ type: USER_FETCH_FAIL, payload: err }));
 };
 
-export const saveEdit = (id, color) => dispatch => {
-  dispatch({ type: EDIT_COLOR_START });
+export const saveEdit = (id, USER) => dispatch => {
+  dispatch({ type: EDIT_USER_START });
   axiosWithAuth()
-    .put(`http://localhost:5000/api/colors/${id}`, color)
+    .put(`http://localhost:5000/api/USER/${id}`, USER)
     .then(res => {
-      getColors();
+      getUSER();
     })
-    .catch(err => dispatch({ type: EDIT_COLOR_FAIL, payload: err }));
+    .catch(err => dispatch({ type: EDIT_USER_FAIL, payload: err }));
 };
 
-export const deleteColor = id => dispatch => {
+export const deleteUSER = id => dispatch => {
   console.log("delete id", id);
-  dispatch({ type: DELETE_COLOR_START });
+  dispatch({ type: DELETE_USER_START });
   axiosWithAuth()
-    .delete(`http://localhost:5000/api/colors/${id}`)
+    .delete(`http://localhost:5000/api/USER/${id}`)
     .then(console.log("u piece of shit"))
-    .catch(err => dispatch({ type: DELETE_COLOR_FAIL, payload: err }));
+    .catch(err => dispatch({ type: DELETE_USER_FAIL, payload: err }));
 };

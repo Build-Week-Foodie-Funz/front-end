@@ -9,6 +9,8 @@
  *  - Email & password verification
  */
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { createUser, getInitialData } from "../actions/actions";
 import { Form, Field, withFormik } from "formik";
 import styled from "styled-components";
 import * as Yup from "yup";
@@ -46,70 +48,90 @@ const ButtonContainer = styled.div`
 	margin: 0 auto;
 `;
 
-const SignUp = ({ errors, status, value, touched }) => {
-  const [users, setUsers] = useState([]);
-  useEffect(() => {
-    if (status) {
-      setUsers([...users, status]);
-    }
-  }, [status]);
-
+const SignUp = props => {
+  console.log("History", props.history);
   return (
     <UserContainer>
       <div class="header">Sign Up</div>
-      <Form>
+      <Form
+        id="signup-form"
+        onSubmit={e => {
+          props.createUser({
+            username: document.getElementById("signup-username").value,
+            email: document.getElementById("signup-email").value,
+            password: document.getElementById("signup-password").value,
+            location: document.getElementById("signup-location").value
+          });
+        }}
+      >
         <InputContainer>
           <UserInput>
-            <StyledField type="text" name="username" placeholder="Username:" />
-            {touched.username && errors.username && (
+            <StyledField
+              id="signup-username"
+              type="text"
+              name="username"
+              placeholder="Username:"
+            />
+            {/* {touched.username && errors.username && (
               <p classname="error">{errors.username}</p>
-            )}
+            )} */}
           </UserInput>
           <UserInput>
             <StyledField
               name="email"
               type="email"
+              id="signup-email"
               placeholder="Email address:"
             />
-            {touched.email && errors.email && (
+            {/* {touched.email && errors.email && (
               <p className="error">{errors.email}</p>
-            )}
+            )} */}
           </UserInput>
           <UserInput>
             <StyledField
               name="password"
+              id="signup-password"
               type="password"
               placeholder="Enter Your Password:"
             />
-            {touched.password && errors.password && (
+            {/* {touched.password && errors.password && (
               <p className="error">{errors.password}</p>
-            )}
+            )} */}
           </UserInput>
           <UserInput>
-            <StyledField name="area" type="location" placeholder="Location" />
-            {touched.area && errors.area && (
+            <StyledField
+              id="signup-location"
+              name="area"
+              type="text"
+              placeholder="Location"
+            />
+            {/* {touched.area && errors.area && (
               <p className="error">{errors.area}</p>
-            )}
+            )} */}
           </UserInput>
         </InputContainer>
         Forgot password? <a href="#">reset</a>
         <ButtonContainer>
-          <div className="btn" type="submit">
+          <button
+            className="btn"
+            type="submit"
+            onClick={() => props.history.push("/login")}
+          >
             Sign Up
-          </div>
-          <div className="btn-2" type="submit">
+          </button>
+          <button className="btn-2" type="submit">
             Sign In
-          </div>
+          </button>
         </ButtonContainer>
       </Form>
-      {users.map(item => (
+      {/* {users.map(item => (
         <ul key={item.id}>
           <li>Username:{item.username}</li>
           <li>Email:{item.email}</li>
           <li>Password:{item.password}</li>
           <li>Location:{item.location}</li>
         </ul>
-      ))}
+      ))} */}
     </UserContainer>
   );
 };
@@ -148,4 +170,7 @@ const UserLogin = withFormik({
   },
 })(SignUp);
 
-export default UserLogin;
+export default connect(
+  null,
+  { createUser, getInitialData }
+)(SignUp);
