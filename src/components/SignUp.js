@@ -13,6 +13,7 @@ import { Form, Field, withFormik } from "formik";
 import styled from "styled-components";
 import * as Yup from "yup";
 import axios from "axios";
+import "../styles/button.scss";
 
 const UserContainer = styled.div`
   background-color: #fbfcee;
@@ -22,7 +23,7 @@ const UserContainer = styled.div`
 const UserInput = styled.div`
   padding-left: 10px;
   color: red;
-  // height: 50px;
+  height: 50px;
 `;
 const InputContainer = styled.div`
   background-color: #fbfcee;
@@ -41,7 +42,7 @@ const StyledField = styled.input`
 const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 18%;
+  width: 45%;
   margin: 0 auto;
 `;
 
@@ -59,7 +60,7 @@ const SignUp = ({ errors, status, value, touched }) => {
       <Form>
         <InputContainer>
           <UserInput>
-            <StyledField type="text" name="username" placeholder="Username" />
+            <StyledField type="text" name="username" placeholder="Username:" />
             {touched.username && errors.username && (
               <p classname="error">{errors.username}</p>
             )}
@@ -68,7 +69,7 @@ const SignUp = ({ errors, status, value, touched }) => {
             <StyledField
               name="email"
               type="email"
-              placeholder="Email address"
+              placeholder="Email address:"
             />
             {touched.email && errors.email && (
               <p className="error">{errors.email}</p>
@@ -78,7 +79,7 @@ const SignUp = ({ errors, status, value, touched }) => {
             <StyledField
               name="password"
               type="password"
-              placeholder="Enter Your Password"
+              placeholder="Enter Your Password:"
             />
             {touched.password && errors.password && (
               <p className="error">{errors.password}</p>
@@ -93,12 +94,12 @@ const SignUp = ({ errors, status, value, touched }) => {
         </InputContainer>
         Forgot password? <a href="#">reset</a>
         <ButtonContainer>
-          <button className="btn" type="submit">
+          <div className="btn" type="submit">
             Sign Up
-          </button>
-          <button className="btn" type="submit">
+          </div>
+          <div className="btn-2" type="submit">
             Sign In
-          </button>
+          </div>
         </ButtonContainer>
       </Form>
       {users.map(item => (
@@ -118,7 +119,7 @@ const UserLogin = withFormik({
       username: username || "",
       email: email || "",
       password: password || "",
-      location: location || "",
+      location: location || ""
     };
   },
 
@@ -131,7 +132,7 @@ const UserLogin = withFormik({
       .required("Enter your email address."),
     password: Yup.string()
       .required("Enter your password.")
-      .min(8, "Too short, please enter at least eight (8) characters."),
+      .min(8, "Too short, please enter at least eight (8) characters.")
   }),
 
   handleSubmit(values, { setStatus }) {
@@ -144,7 +145,7 @@ const UserLogin = withFormik({
       .catch(err => {
         console.log(err.response);
       });
-  },
+  }
 })(SignUp);
 
 export default UserLogin;

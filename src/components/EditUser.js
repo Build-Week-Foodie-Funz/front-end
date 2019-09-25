@@ -11,9 +11,17 @@
  *
  */
 import React, { useState } from "react";
-import Formik, { withFormik, Field, Form } from "formik";
+import Formik, {
+	withFormik,
+	Field,
+	Form,
+	yupToFormErrors,
+	ErrorMessage
+} from "formik";
 import styled from "styled-components";
 import profilePicture from "../images/defaultuser.png";
+import * as Yup from "yup";
+import axios from "axios";
 
 const WarningText = styled.p`
 	color: red;
@@ -45,10 +53,14 @@ const StyledField = styled.input`
 const ButtonContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	width: 10%;
+	width: 20%;
 	margin: 0 auto;
 	align-items: center;
 	justify-content: center;
+	font-size: 0.8rem;
+	.btn-2 {
+		width: 90%;
+	}
 `;
 
 const UserImage = styled.img`
@@ -58,22 +70,26 @@ const UserImage = styled.img`
 	border: 4px solid black;
 `;
 
-const EditUser = props => {
+const ErrorMessageText = styled.p`
+	height: 30px;
+	color: red;
+`;
+
+const EditUser = ({ touched, errors, status }) => {
+	const [userInfo, setUserInfo] = useState();
 	const [userUpdate, setUserUpdate] = useState({
-		name: "",
+		username: "",
 		email: "",
 		password: "",
 		location: ""
 	});
-	// const initialState = {
-	// 	username: "",
-	// 	password: "",
-	// 	email: "",
-	// 	location: ""
-	// };
+	// axios.get("sethnadu-foodie-bw.herokuapp.com/").then(response => {
+	// 	console.log(response);
+	// 	setUserInfo(response);
+	// });
 
 	const updateUserInfo = e => {
-		console.log(userUpdate);
+		// console.log(userUpdate);
 		setUserUpdate({ ...userUpdate, [e.target.name]: e.target.value });
 	};
 
@@ -101,6 +117,7 @@ const EditUser = props => {
 								type="email"
 								name="email"
 								placeholder="Email"
+								onChange={updateUserInfo}
 							/>
 						</UserInput>
 						<UserInput>
@@ -124,13 +141,16 @@ const EditUser = props => {
 					</InputContainer>
 					<ButtonContainer>
 						<UserImage src={profilePicture}></UserImage>
-						<button type="submit">Update Profile</button>
+						<button type="submit" className="btn">
+							Update Profile
+						</button>
 						<button
 							onClick={
 								(window.onload = function() {
 									document.getElementById("update-form").reset();
 								})
 							}
+							className="btn-2"
 						>
 							Reset changes
 						</button>
@@ -149,6 +169,22 @@ const FormikEditUser = withFormik({
 			location: location || "",
 			password: password || ""
 		};
+	},
+	// validationSchema: Yup.object().shape({
+	// 	password: Yup.string(5).required(
+	// 		"Password must be at least 5 characters long"
+	// 	)
+	// }),
+	handleSubmit(values, { setStatus }) {
+		axios
+			.post("", values)
+			.then(response => {
+				console.log(response);
+				setStatus(response.data);
+			})
+			.catch(err => {
+				console.log(err.response);
+			});
 	}
 })(EditUser);
 
