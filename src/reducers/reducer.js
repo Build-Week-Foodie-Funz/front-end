@@ -12,18 +12,18 @@ import {
   INITIAL_FETCH_FAIL,
   INITIAL_FETCH_START,
   INITIAL_FETCH_SUCCESS,
-  CREATE_COLORS_FAIL,
-  CREATE_COLORS_START,
-  CREATE_COLORS_SUCCESS,
-  COLORS_FETCH_FAIL,
-  COLORS_FETCH_START,
-  COLORS_FETCH_SUCCESS,
-  DELETE_COLOR_FAIL,
-  DELETE_COLOR_START,
-  DELETE_COLOR_SUCCESS,
-  EDIT_COLOR_FAIL,
-  EDIT_COLOR_START,
-  EDIT_COLOR_SUCCESS
+  CREATE_USER_FAIL,
+  CREATE_USER_START,
+  CREATE_USER_SUCCESS,
+  USER_FETCH_FAIL,
+  USER_FETCH_START,
+  USER_FETCH_SUCCESS,
+  DELETE_USER_FAIL,
+  DELETE_USER_START,
+  DELETE_USER_SUCCESS,
+  EDIT_USER_FAIL,
+  EDIT_USER_START,
+  EDIT_USER_SUCCESS
 } from "../actions/actions";
 
 const initialState = {
@@ -35,58 +35,58 @@ const initialState = {
 function reducer(state = initialState, action) {
   console.log("State", state);
   switch (action.type) {
-    case DELETE_COLOR_START:
+    case DELETE_USER_START:
       return {
         ...state,
         isFetching: true,
         error: ""
       };
-    case DELETE_COLOR_SUCCESS:
+    case DELETE_USER_SUCCESS:
       return {
         ...state,
         isFetching: false,
         error: ""
       };
-    case DELETE_COLOR_FAIL:
+    case DELETE_USER_FAIL:
       return {
         ...state,
         error: action.payload
       };
 
-    case EDIT_COLOR_START:
+    case EDIT_USER_START:
       return {
         ...state,
         isFetching: true,
         error: ""
       };
-    case EDIT_COLOR_SUCCESS:
+    case EDIT_USER_SUCCESS:
       return {
         ...state,
-        colors: [...action.payload],
+        USER: [...action.payload],
         isFetching: false,
         error: ""
       };
-    case EDIT_COLOR_FAIL:
+    case EDIT_USER_FAIL:
       return {
         ...state,
         error: action.payload
       };
 
-    case COLORS_FETCH_START:
+    case USER_FETCH_START:
       return {
         ...state,
         isFetching: true,
         error: ""
       };
-    case COLORS_FETCH_SUCCESS:
+    case USER_FETCH_SUCCESS:
       console.log("action, success", action.payload);
       return {
         ...state,
-        colors: [...action.payload],
+        USER: [...action.payload],
         isFetching: false,
         error: ""
       };
-    case COLORS_FETCH_FAIL:
+    case USER_FETCH_FAIL:
       return {
         ...state,
         error: action.payload
@@ -109,20 +109,20 @@ function reducer(state = initialState, action) {
         ...state,
         error: action.payload
       };
-    case CREATE_COLORS_START:
+    case CREATE_USER_START:
       return {
         ...state,
         isFetching: true,
         error: ""
       };
-    case CREATE_COLORS_SUCCESS:
+    case CREATE_USER_SUCCESS:
+      console.log("The data receivved for the post new user", action.payload);
       return {
         ...state,
-        colors: [...action.payload],
         isFetching: false,
         error: ""
       };
-    case CREATE_COLORS_FAIL:
+    case CREATE_USER_FAIL:
       console.log("Post failed");
       return {
         ...state,
