@@ -49,19 +49,21 @@ const ButtonContainer = styled.div`
 `;
 
 const SignUp = props => {
-  console.log("History", props.history);
   return (
     <UserContainer>
       <div class="header">Sign Up</div>
       <Form
         id="signup-form"
         onSubmit={e => {
-          props.createUser({
+          e.preventDefault();
+          let call = props.createUser({
             username: document.getElementById("signup-username").value,
             email: document.getElementById("signup-email").value,
             password: document.getElementById("signup-password").value,
             location: document.getElementById("signup-location").value
           });
+          props.history.push("/login");
+          return call;
         }}
       >
         <InputContainer>
@@ -112,14 +114,10 @@ const SignUp = props => {
         </InputContainer>
         Forgot password? <a href="#">reset</a>
         <ButtonContainer>
-          <button
-            className="btn"
-            type="submit"
-            onClick={() => props.history.push("/login")}
-          >
+          <button className="btn" type="submit">
             Sign Up
           </button>
-          <button className="btn-2" type="submit">
+          <button type="button" className="btn-2">
             Sign In
           </button>
         </ButtonContainer>
