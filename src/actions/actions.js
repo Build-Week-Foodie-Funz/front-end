@@ -63,11 +63,11 @@ export const createUser = props => dispatch => {
     .catch(err => dispatch({ type: CREATE_USER_FAIL, payload: err }));
 };
 
-export const getUSER = () => dispatch => {
+export const getUser = () => dispatch => {
   console.log("got here to get");
   dispatch({ type: USER_FETCH_START });
   axiosWithAuth()
-    .get("http://localhost:5000/api/USER")
+    .get("https://sethnadu-foodie-bw.herokuapp.com/user/restaurants")
     .then(res => {
       dispatch({ type: USER_FETCH_SUCCESS, payload: res.data });
     })
@@ -79,7 +79,7 @@ export const saveEdit = (id, USER) => dispatch => {
   axiosWithAuth()
     .put(`http://localhost:5000/api/USER/${id}`, USER)
     .then(res => {
-      getUSER();
+      getUser();
     })
     .catch(err => dispatch({ type: EDIT_USER_FAIL, payload: err }));
 };

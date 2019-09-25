@@ -82,7 +82,7 @@ function reducer(state = initialState, action) {
       console.log("action, success", action.payload);
       return {
         ...state,
-        USER: [...action.payload],
+        user: { ...action.payload },
         isFetching: false,
         error: ""
       };

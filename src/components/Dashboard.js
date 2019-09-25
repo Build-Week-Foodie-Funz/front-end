@@ -12,9 +12,26 @@
  */
 
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import { getUser } from "../actions/actions";
 
-const Dashboard = () => {
-  return <h1>Imagine a Dashboard</h1>;
+const Dashboard = props => {
+  console.log("user data", props.user);
+  return (
+    <>
+      <h1>Imagine a Dashboard</h1>
+      <button onClick={() => props.getUser()}>Get user</button>
+    </>
+  );
 };
 
-export default Dashboard;
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { getUser }
+)(Dashboard);
