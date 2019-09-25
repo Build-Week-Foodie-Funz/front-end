@@ -14,6 +14,7 @@ import { connect } from "react-redux";
 import { getInitialData } from "../actions/actions";
 import styled from "styled-components";
 import mobile from "../images/mobile-login.svg";
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 
 const StyledDiv = styled.div`
