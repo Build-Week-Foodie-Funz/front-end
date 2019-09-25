@@ -14,6 +14,7 @@ import React, { useState, useEffect } from "react";
 import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import { axiosWithAuth } from "../axios/axiosWithAuth";
 
 const FoodForm = ({ values, errors, touched, status }) => {
   const [reviewData, setReviewData] = useState([]);
@@ -23,8 +24,8 @@ const FoodForm = ({ values, errors, touched, status }) => {
   };
 
   useEffect(() => {
-    axios
-      .get(`sethnadu-foodie-bw.herokuapp.com/user/restaurants/`)
+    axiosWithAuth()
+      .get(`https://sethnadu-foodie-bw.herokuapp.com/user/restaurants`)
       .then(response => {
         console.log(response);
       })
@@ -42,6 +43,7 @@ const FoodForm = ({ values, errors, touched, status }) => {
   return (
     <div className="foodform">
       <Form>
+        <h2>Create a Review</h2>
         <Field component="select" className="restaurant" name="restname">
           <option>Please Choose an Option</option>
           <option>Test</option>
