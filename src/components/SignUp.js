@@ -104,7 +104,7 @@ const SignUp = ({ errors, status, value, touched }) => {
       </Form>
       {users.map(item => (
         <ul key={item.id}>
-          <li>Nickname:{item.nickname}</li>
+          <li>Username:{item.username}</li>
           <li>Email:{item.email}</li>
           <li>Password:{item.password}</li>
           <li>Location:{item.location}</li>
@@ -119,7 +119,7 @@ const UserLogin = withFormik({
       username: username || "",
       email: email || "",
       password: password || "",
-      location: location || ""
+      location: location || "",
     };
   },
 
@@ -132,7 +132,7 @@ const UserLogin = withFormik({
       .required("Enter your email address."),
     password: Yup.string()
       .required("Enter your password.")
-      .min(8, "Too short, please enter at least eight (8) characters.")
+      .min(8, "Too short, please enter at least eight (8) characters."),
   }),
 
   handleSubmit(values, { setStatus }) {
@@ -145,7 +145,7 @@ const UserLogin = withFormik({
       .catch(err => {
         console.log(err.response);
       });
-  }
+  },
 })(SignUp);
 
 export default UserLogin;
