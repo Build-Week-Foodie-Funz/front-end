@@ -13,6 +13,7 @@ import Dashboard from "./components/Dashboard";
 import FormikEditUser from "./components/EditUser";
 import FoodForm from "./components/FoodForm";
 import SignUp from "./components/SignUp";
+import Reviews from "./components/Reviews";
 import FoodItem from "./components/FoodItem";
 import ResetPassword from "./components/ResetPassword";
 import "./styles.scss";
@@ -38,7 +39,7 @@ function App() {
         <Route path="/signup" component={SignUp} />
         {/* These four below will be converted to PrivateRouters*/}
 
-        <Route path="/foodform/" component={FoodForm} />
+        <Route path="/reviews/:id" component={Reviews} />
         <Route path="/editprofile/" component={FormikEditUser} />
         <Route path="/reset/" component={ResetPassword} />
         <Route path="/fooditem/:id" component={FoodItem} />

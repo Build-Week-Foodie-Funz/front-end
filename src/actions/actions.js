@@ -23,6 +23,10 @@ export const CREATE_USER_START = "CREATE_USER_START";
 export const CREATE_USER_SUCCESS = "CREATE_USER_SUCCESS";
 export const CREATE_USER_FAIL = "CREATE_USER_FAIL";
 
+export const RESTAURANT_FETCH_START = "RESTAURANT_FETCH_START";
+export const RESTAURANT_FETCH_SUCCESS = "RESTAURANT_FETCH_SUCCESS";
+export const RESTAURANT_FETCH_FAIL = "RESTAURANT_FETCH_FAIL";
+
 export const DELETE_USER_START = "DELETE_USER_START";
 export const DELETE_USER_SUCCESS = "DELETE_USER_SUCCESS";
 export const DELETE_USER_FAIL = "DELETE_USER_FAIL";
@@ -40,8 +44,8 @@ export const getInitialData = (props, history) => dispatch => {
       {
         headers: {
           Authorization: `Basic ${btoa("lambda-client:lambda-secret")}`,
-          "Content-Type": "application/x-www-form-urlencoded"
-        }
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
       }
     )
     .then(res => {
@@ -72,6 +76,18 @@ export const getUser = () => dispatch => {
       dispatch({ type: USER_FETCH_SUCCESS, payload: res.data });
     })
     .catch(err => dispatch({ type: USER_FETCH_FAIL, payload: err }));
+};
+
+export const getRestaurant = id => dispatch => {
+  dispatch({ type: RESTAURANT_FETCH_START });
+  axiosWithAuth()
+    .get(
+      `https://sethnadu-foodie-bw.herokuapp.com/user/restaurants/${id}/reviews`
+    )
+    .then(res => {
+      dispatch({ type: RESTAURANT_FETCH_SUCCESS, payload: res.data });
+    })
+    .catch(err => dispatch({ type: RESTAURANT_FETCH_FAIL, payload: err }));
 };
 
 export const saveEdit = (id, USER) => dispatch => {
