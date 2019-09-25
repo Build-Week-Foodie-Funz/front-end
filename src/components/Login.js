@@ -187,6 +187,10 @@ const Login = props => {
                     />
                     <ErrorMessage name="password" component="div" />
                   </div>
+                  <div>
+                    <span>Forgot Password?</span>                    
+                    <NavLink to="/reset">Reset</NavLink>
+                  </div>
                   <button type="submit">Sign in</button>
                   <NavLink to="/signup">
                     <button>Sign up</button>
