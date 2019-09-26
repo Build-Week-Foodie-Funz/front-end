@@ -20,11 +20,6 @@ import Reviews from "./Reviews";
 import { connect } from "react-redux";
 import { getUser } from "../actions/actions";
 
-const FoodPicture = styled.img`
-  width: 100px;
-  height: 100px;
-`;
-
 const HeaderImage = styled.img`
   height: 5%;
   border-radius: 10%;
@@ -72,12 +67,25 @@ const Header = styled.header`
 `;
 
 const RestCards = styled.div`
-  width: 30%;
-  height: 530px;
-  border: 1px solid black;
-  img {
+
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: center:
+align-items: center;
+width: 100%;
+`;
+
+const CardDiv = styled.div` 
+height: 450px;
+  border-radius: 10%;
+  border: 2px solid #B55E1C;
+  margin: 40px;
+  overflow: hidden;
+  img{
     width: 300px;
-    height: 300px;
+    height: 250px;
+    border-radius: 10%;
   }
 `;
 
