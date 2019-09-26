@@ -11,14 +11,16 @@
  *
  */
 import React, { useState } from "react";
+import { connect } from "react-redux";
 import Formik, {
   withFormik,
   Field,
   Form,
   yupToFormErrors,
-  ErrorMessage,
+  ErrorMessage
 } from "formik";
 import styled from "styled-components";
+import { editUser } from "../actions/actions";
 import profilePicture from "../images/defaultuser.png";
 import * as Yup from "yup";
 import axios from "axios";
@@ -75,27 +77,36 @@ const ErrorMessageText = styled.p`
   color: red;
 `;
 
-const EditUser = ({ touched, errors, status }) => {
-  const [userInfo, setUserInfo] = useState();
+const EditUser = props => {
   const [userUpdate, setUserUpdate] = useState({
     username: "",
     email: "",
     password: "",
     location: "",
+    photo: ""
   });
-  // axios.get("sethnadu-foodie-bw.herokuapp.com/").then(response => {
-  // 	console.log(response);
-  // 	setUserInfo(response);
-  // });
 
   const updateUserInfo = e => {
-    // console.log(userUpdate);
+    console.log(userUpdate);
     setUserUpdate({ ...userUpdate, [e.target.name]: e.target.value });
   };
 
   return (
     <>
-      <Form id="update-form">
+      <Form
+        id="update-form"
+        onSubmit={e => {
+          e.preventDefault();
+          props.editUser({
+            username: userUpdate.user || props.user.username,
+            // email: userUpdate.email || props.user.email,
+            // location: userUpdate.location || props.user.location,
+            // password: userUpdate.password || props.user.password,
+            photo: userUpdate.photo || props.user.photo
+          });
+          console.log("submitted data: ", userUpdate);
+        }}
+      >
         <UserContainer>
           <InputContainer>
             <h2>UPDATE PROFILE:</h2>
@@ -138,6 +149,15 @@ const EditUser = ({ touched, errors, status }) => {
                 onChange={updateUserInfo}
               />
             </UserInput>
+            <UserInput>
+              <StyledField
+                id="photo-input"
+                type="text"
+                name="photo"
+                placeholder="Photo"
+                onChange={updateUserInfo}
+              />
+            </UserInput>
           </InputContainer>
           <ButtonContainer>
             <UserImage src={profilePicture}></UserImage>
@@ -145,11 +165,10 @@ const EditUser = ({ touched, errors, status }) => {
               Update Profile
             </button>
             <button
-              onClick={
-                (window.onload = function() {
-                  document.getElementById("update-form").reset();
-                })
-              }
+              onClick={e => {
+                e.preventDefault();
+                document.getElementById("update-form").reset();
+              }}
               className="btn-2"
             >
               Reset changes
@@ -162,30 +181,29 @@ const EditUser = ({ touched, errors, status }) => {
 };
 
 const FormikEditUser = withFormik({
-  mapPropsToValue({ username, email, password, location }) {
+  mapPropsToValue({ username, email, password, location, photo }) {
     return {
       username: username || "",
       email: email || "",
       location: location || "",
       password: password || "",
+      photo: photo || ""
     };
-  },
+  }
   // validationSchema: Yup.object().shape({
   // 	password: Yup.string(5).required(
   // 		"Password must be at least 5 characters long"
   // 	)
   // }),
-  handleSubmit(values, { setStatus }) {
-    axios
-      .post("", values)
-      .then(response => {
-        console.log(response);
-        setStatus(response.data);
-      })
-      .catch(err => {
-        console.log(err.response);
-      });
-  },
 })(EditUser);
 
-export default FormikEditUser;
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { editUser }
+)(FormikEditUser);

@@ -44,8 +44,8 @@ export const getInitialData = (props, history) => dispatch => {
       {
         headers: {
           Authorization: `Basic ${btoa("lambda-client:lambda-secret")}`,
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
       }
     )
     .then(res => {
@@ -90,12 +90,22 @@ export const getRestaurant = id => dispatch => {
     .catch(err => dispatch({ type: RESTAURANT_FETCH_FAIL, payload: err }));
 };
 
-export const saveEdit = (id, USER) => dispatch => {
+export const editUser = (id, user) => dispatch => {
   dispatch({ type: EDIT_USER_START });
   axiosWithAuth()
-    .put(`http://localhost:5000/api/USER/${id}`, USER)
+    .put(
+      `https://sethnadu-foodie-bw.herokuapp.com/users/user/${id}`,
+      user,
+
+      {
+        headers: {
+          Authorization: `Basic ${btoa("lambda-client:lambda-secret")}`,
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
+      }
+    )
     .then(res => {
-      getUser();
+      console.log("edited user");
     })
     .catch(err => dispatch({ type: EDIT_USER_FAIL, payload: err }));
 };
@@ -105,6 +115,6 @@ export const deleteUSER = id => dispatch => {
   dispatch({ type: DELETE_USER_START });
   axiosWithAuth()
     .delete(`http://localhost:5000/api/USER/${id}`)
-    .then(console.log("u piece of shit"))
+    .then(console.log("deleted"))
     .catch(err => dispatch({ type: DELETE_USER_FAIL, payload: err }));
 };
