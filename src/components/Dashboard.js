@@ -83,10 +83,11 @@ width: 100%;
 const CardDiv = styled.div` 
   height: 450px;
   border-radius: 10%;
-  border: 2px solid #b55e1c;
+  border: 3px solid #b55e1c;
   margin: 40px;
   overflow: hidden;
   background: white;
+  height: auto;
   img{
     width: 300px;
     height: 250px;
@@ -94,46 +95,52 @@ const CardDiv = styled.div`
   }
 `;
 
+const DashButton = styled.button`
+  width: 150px;
+`;
+
+
 const Dashboard = props => {
   // Pull from state originally, if filtered then chnge it up accordingly
   const [userInformation, setUserInformation] = useState();
-
 
   // storing the 3 inputs inside an object {
   // field1: "", field2: "", field: ""
   //}
   const [inputData, setInputData] = useState({
     name: "",
-    type: "",
-    price: "",
+    location: "",
   });
+
+  const [filteredRests, setfilteredRests] = useState([])
+
+  useEffect(() => {
+    axiosWithAuth()
+      .get('https://sethnadu-foodie-bw.herokuapp.com/user/restaurants')
+      .then(res => {
+        setUserInformation(res);
+        console.log('this is your axios call', userInformation)
+      })
+  }, [monitorInput])
 
   const monitorInput = e => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
     // console.log(inputData)
   };
 
-  useEffect(() => {
-    setUserInformation(props.getUser());
-    console.log("THEFRIKC", userInformation);
-    if (inputData.name.length > 0) {
-      // userInformation.filter((rest) => {
-      // return rest.includes(inputData.name)
-      // console.log("REST NAME", rest)
-      // })
-    } else if (inputData.type.length > 0) {
-    } else if (inputData.price.length > 0) {
-    } else {
-      setUserInformation(props.getUser());
-    }
-  }, [inputData]);
-
-  // useEffect(() => {
-  //   inputData.filter()
-  // }, [inputData])
+  const searchPosts = e => {
+    e.preventDefault();
+    const cards = props.user.restaurant.filter((rest) => {
+      if (rest.restname.includes(inputData.name)) {
+        return rest
+      }
+    })
+    setfilteredRests(cards)
+    console.log('CARDS', cards)
+  }
 
   // window.onload = setUserInformation(props.getUser());
-  console.log("This is REst", props.user.restaurant);
+  // console.log("This is REst", props.user.restaurant);
   return (
     <PageContainer>
       <Header>
@@ -144,25 +151,19 @@ const Dashboard = props => {
         <a href="/addrestaurant">Add Restaurant</a>
         <a href="/foodform">Add Review</a>
       </Header>
-      <SearchForms className="search-forms">
-        <input 
-        type="text"
-         name="name"
+      <SearchForms className="search-forms" onChange={searchPosts}>
+        <input
+          type="text"
+          name="name"
           placeholder="Name of Resaurant"
-           onChange={monitorInput} 
-           />
-        <input
-         type="text" 
-         name="type" 
-         placeholder="Type of food"
           onChange={monitorInput}
-           />
+        />
         <input
-         type="text" 
-         name="price"
-          placeholder="Price"
-           onChange={monitorInput}
-            />
+          type="text"
+          name="location"
+          placeholder="Restaurant Location"
+          onChange={monitorInput}
+        />
       </SearchForms>
       <RestCards>
         {/* <FoodPicture src='https://images.unsplash.com/photo-1557872943-16a5ac26437e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1316&q=80'></FoodPicture> */}
@@ -170,22 +171,22 @@ const Dashboard = props => {
           ? props.user.restaurant.map(rest => {
             return (
               <CardDiv>
-                <img src={rest.restphotos[1].photo}></img>
+                {/* <img src={rest.restphotos[0].photo}></img> */}
                 <h3>{rest.restname}</h3>
                 <h4>Horus: {rest.resthours}</h4>
                 <p>Location: {rest.restlocation}</p>
-                <p>{rest.restrating}</p> 
-                <button
+                <p>{rest.restrating}</p>
+                <DashButton
+                  id='dash-btn'
                   className='btn-2'
                   rest={rest}
                   onClick={() => {
-                    console.log(rest);
                     props.history.push(`/reviews/${rest.restid}`);
                     return <Reviews data={rest.restid} />;
                   }}
                 >
                   View reviews
-                  </button>
+                  </DashButton>
               </CardDiv>
             );
           })
