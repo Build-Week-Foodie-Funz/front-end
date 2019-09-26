@@ -35,11 +35,14 @@ const ProfileImage = styled.img`
   border-radius: 50%;
   border: 4px solid White;
   margin-left: 30px;
+  margin-top: -100px;
 `;
 
 const UsersName = styled.h2`
   font-size: 2rem;
-  width: 400px;
+  width: 200px;
+  text-align: left;
+  padding: 0 30px;
 `;
 
 const SearchForms = styled.div`
@@ -60,19 +63,21 @@ const Header = styled.header`
   display: flex;
   flex-wrap: wrap;
   a {
+  
     position: relative;
     margin: 20px;
     float: right;
+    justify-content: space-between;
   }
 `;
 
 const RestCards = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: center;
+align-items: center;
+width: 100%;
 `;
 
 const CardDiv = styled.div`
@@ -81,7 +86,8 @@ const CardDiv = styled.div`
   border: 2px solid #b55e1c;
   margin: 40px;
   overflow: hidden;
-  img {
+  background: white;
+  img{
     width: 300px;
     height: 250px;
     border-radius: 10%;
@@ -92,7 +98,8 @@ const Dashboard = props => {
   // Pull from state originally, if filtered then chnge it up accordingly
   const [userInformation, setUserInformation] = useState();
 
-  // storug the3 inputs inside an object {
+
+  // storing the 3 inputs inside an object {
   // field1: "", field2: "", field: ""
   //}
   const [inputData, setInputData] = useState({
@@ -132,7 +139,7 @@ const Dashboard = props => {
       <Header>
         <HeaderImage src="https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"></HeaderImage>
         <ProfileImage src="https://images.unsplash.com/photo-1512794268250-65fd4cd7441f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"></ProfileImage>
-        <UsersName>Hello, {props.user.username}!</UsersName>
+        <UsersName>Hello, Jimmy Bobby!</UsersName>
         <a href="/editprofile">Edit Profile</a>
         <a href="/addrestaurant">Add Restaurant</a>
         <a href="/foodform">Add Review</a>
@@ -161,25 +168,27 @@ const Dashboard = props => {
         {/* <FoodPicture src='https://images.unsplash.com/photo-1557872943-16a5ac26437e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1316&q=80'></FoodPicture> */}
         {props.user.restaurant
           ? props.user.restaurant.map(rest => {
-              return (
-                <CardDiv>
-                  <h3>{rest.restname}</h3>
-                  <img src={rest.restphotos[1].photo}></img>
-                  <h4>Horus: {rest.resthours}</h4>
-                  <p>Location: {rest.restlocation}</p>
-                  <button
-                    rest={rest}
-                    onClick={() => {
-                      console.log(rest);
-                      props.history.push(`/reviews/${rest.restid}`);
-                      return <Reviews data={rest.restid} />;
-                    }}
-                  >
-                    View reviews
+            return (
+              <CardDiv>
+                <img src={rest.restphotos[1].photo}></img>
+                <h3>{rest.restname}</h3>
+                <h4>Horus: {rest.resthours}</h4>
+                <p>Location: {rest.restlocation}</p>
+                <p>{rest.restrating}</p> 
+                <button
+                  className='btn-2'
+                  rest={rest}
+                  onClick={() => {
+                    console.log(rest);
+                    props.history.push(`/reviews/${rest.restid}`);
+                    return <Reviews data={rest.restid} />;
+                  }}
+                >
+                  View reviews
                   </button>
-                </CardDiv>
-              );
-            })
+              </CardDiv>
+            );
+          })
           : null}
       </RestCards>
       {(window.onload = () => props.getUser())}

@@ -29,7 +29,6 @@ const Navigation = styled.nav`
 const NavItem = styled.a`
 	text-decoration: none;
 	color: white;
-	width: 10em;
 	@media (min-width: 500px) {
 		margin: 5px;
 	}
@@ -58,7 +57,8 @@ const NavigationBar = () => {
 			<LogoText>Foodie Fun</LogoText>
 			<Navigation>
 				<NavItem href="/login">Login</NavItem>
-				<NavItem href="/home">Marketing</NavItem>
+				<NavItem href="https://foodiefun-marketing.netlify.com/">Marketing</NavItem>
+				<NavItem href='/'>Home</NavItem>
 				<NavItem href="signup">Sign-Up</NavItem>
 			</Navigation>
 		</NavContainer>
