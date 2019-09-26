@@ -92,11 +92,8 @@ height: 450px;
 const Dashboard = props => {
   const [userInformation, setUserInformation] = useState();
 
-  // console.log("user data", userInformation);
-  // console.log(userInformation)
   useEffect(() => {
     setUserInformation(props.getUser());
-    // console.log('THIS IS YOUR USERDATA LOADING', props.getUser())
   }, []);
 
   // window.onload = setUserData(mapStateToProps);
@@ -108,6 +105,7 @@ const Dashboard = props => {
         <ProfileImage src="https://images.unsplash.com/photo-1512794268250-65fd4cd7441f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"></ProfileImage>
         <UsersName>Hello, {props.user.username}!</UsersName>
         <a href="/editprofile">Edit Profile</a>
+        <a href="/addrestaurant">Add Restaurant</a>
         <a href="/foodform">Add Review</a>
       </Header>
       <SearchForms className="search-forms">
@@ -119,31 +117,28 @@ const Dashboard = props => {
         {/* <FoodPicture src='https://images.unsplash.com/photo-1557872943-16a5ac26437e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1316&q=80'></FoodPicture> */}
         {props.user.restaurant
           ? props.user.restaurant.map(rest => {
-              return (
-                <>
-                  <h3>{rest.restname}</h3>
-                  <img src={rest.restphotos[1].photo}></img>
-                  <h4>Horus: {rest.resthours}</h4>
-                  <p>Location: {rest.restlocation}</p>
-                  <button
-                    rest={rest}
-                    onClick={() => {
-                      console.log(rest);
-                      props.history.push(`/reviews/${rest.restid}`);
-                      return <Reviews data={rest.restid} />;
-                    }}
-                  >
-                    View reviews
+            return (
+              <>
+                <h3>{rest.restname}</h3>
+                <img src={rest.restphotos[1].photo}></img>
+                <h4>Horus: {rest.resthours}</h4>
+                <p>Location: {rest.restlocation}</p>
+                <button
+                  rest={rest}
+                  onClick={() => {
+                    console.log(rest);
+                    props.history.push(`/reviews/${rest.restid}`);
+                    return <Reviews data={rest.restid} />;
+                  }}
+                >
+                  View reviews
                   </button>
-                </>
-              );
-            })
+              </>
+            );
+          })
           : null}
         <h2>{props.user.username}</h2>
       </RestCards>
-      <button onClick={() => console.log("on button press", props.getUser())}>
-        Get user
-      </button>
     </PageContainer>
   );
 };

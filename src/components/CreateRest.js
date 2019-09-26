@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { withFormik, Field, Form } from "formik";
 import * as Yup from "yup";
@@ -12,18 +12,14 @@ const SubmitButton = styled.button`
 `;
 
 const CreateRest = props => {
-	const [restUpload, setRestUpload] = useState({
-		// resthours: "",
-		// restname: "",
-		// restlocation: "",
-		// restrating: ""
-	});
+	const [restUpload, setRestUpload] = useState({});
 
 	const createRestForm = e => {
 		setRestUpload({ ...restUpload, [e.target.name]: e.target.value });
 		console.log(restUpload);
 	};
 
+	console.log(restUpload);
 	return (
 		<>
 			<Form>

@@ -25,41 +25,24 @@ const Header = styled.h2`
 `;
 
 const FoodForm = props => {
-  const [reviewData, setReviewData] = useState([]);
-  const [restaurants, setRestaraunts] = useState([]);
+  const [reviewData, setReviewData] = useState({});
   const reviewDataInput = e => {
     setReviewData({ ...reviewData, [e.target.name]: e.target.value });
+    console.log(reviewData)
   };
 
-  // useEffect(() => {
-  //   axiosWithAuth()
-  //     // .get(`https://sethnadu-foodie-bw.herokuapp.com/user/restaurants`)
-  //     .then(response => {
-  //       console.log(response);
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //     });
-  // }, []);
-
-  // useEffect(() => {
-  //   if (status) {
-  //     setReviewData([...reviewData, status]);
-  //   }
-  // }, [status]);
-  // setTimeout(function () { console.log('This is the timeout', props.user) }, 1000);
   return (
     <div className="foodform">
       <Form >
         <Header>
           <h2>Create a Review</h2>
         </Header>
-        <Field component="select" className="restaurant" name="restname">
+        <Field component="select" className="restaurant" name="restname" onChange={reviewDataInput}>
           {props.user.restaurant
             ? props.user.restaurant.map((rest, i) => {
               return (
                 <>
-                  {console.log(i, rest.restname)}
+                  {/* {console.log(i, rest.restname)} */}
                   <option key={i}>{rest.restname}</option>
                 </>
               );
@@ -102,20 +85,10 @@ const FoodForm = props => {
           type="text"
           name="notes"
           placeholder="Other comments"
+          onChange={reviewDataInput}
         />
-        <button className="btn" onClick={(e) => console.log(e.target.value)}>Submit</button>
+        <button className="btn">Submit</button>
       </Form>
-      {/* {props.user.restaurant
-        ? props.user.restaurant.map(rest => {
-          console.log('TEST', rest)
-          return (
-            <>
-              <h3>TEST</h3>
-              <p>Location: {rest.restlocation}</p>
-            </>
-          );
-        })
-        : null} */}
       {window.onload = () => props.getUser()}
     </div>
   );
