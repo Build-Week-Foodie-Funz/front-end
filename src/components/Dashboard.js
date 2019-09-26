@@ -80,7 +80,7 @@ align-items: center;
 width: 100%;
 `;
 
-const CardDiv = styled.div`
+const CardDiv = styled.div` 
   height: 450px;
   border-radius: 10%;
   border: 2px solid #b55e1c;
@@ -139,30 +139,30 @@ const Dashboard = props => {
       <Header>
         <HeaderImage src="https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"></HeaderImage>
         <ProfileImage src="https://images.unsplash.com/photo-1512794268250-65fd4cd7441f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"></ProfileImage>
-        <UsersName>Hello, Jimmy Bobby!</UsersName>
+        <UsersName>Hello, {props.user.username}!</UsersName>
         <a href="/editprofile">Edit Profile</a>
         <a href="/addrestaurant">Add Restaurant</a>
         <a href="/foodform">Add Review</a>
       </Header>
       <SearchForms className="search-forms">
-        <input
-          type="text"
-          name="name"
+        <input 
+        type="text"
+         name="name"
           placeholder="Name of Resaurant"
-          onChange={monitorInput}
-        />
+           onChange={monitorInput} 
+           />
         <input
-          type="text"
-          name="type"
-          placeholder="Type of food"
+         type="text" 
+         name="type" 
+         placeholder="Type of food"
           onChange={monitorInput}
-        />
+           />
         <input
-          type="text"
-          name="price"
+         type="text" 
+         name="price"
           placeholder="Price"
-          onChange={monitorInput}
-        />
+           onChange={monitorInput}
+            />
       </SearchForms>
       <RestCards>
         {/* <FoodPicture src='https://images.unsplash.com/photo-1557872943-16a5ac26437e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1316&q=80'></FoodPicture> */}
