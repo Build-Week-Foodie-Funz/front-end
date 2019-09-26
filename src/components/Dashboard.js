@@ -67,22 +67,21 @@ const Header = styled.header`
 `;
 
 const RestCards = styled.div`
-
-display: flex;
-flex-direction: row;
-flex-wrap: wrap;
-justify-content: center:
-align-items: center;
-width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 `;
 
-const CardDiv = styled.div` 
-height: 450px;
+const CardDiv = styled.div`
+  height: 450px;
   border-radius: 10%;
-  border: 2px solid #B55E1C;
+  border: 2px solid #b55e1c;
   margin: 40px;
   overflow: hidden;
-  img{
+  img {
     width: 300px;
     height: 250px;
     border-radius: 10%;
@@ -93,14 +92,13 @@ const Dashboard = props => {
   // Pull from state originally, if filtered then chnge it up accordingly
   const [userInformation, setUserInformation] = useState();
 
-
   // storug the3 inputs inside an object {
   // field1: "", field2: "", field: ""
   //}
   const [inputData, setInputData] = useState({
-    name: '',
-    type: '',
-    price: ''
+    name: "",
+    type: "",
+    price: "",
   });
 
   const monitorInput = e => {
@@ -108,19 +106,16 @@ const Dashboard = props => {
     // console.log(inputData)
   };
 
-
   useEffect(() => {
     setUserInformation(props.getUser());
-    console.log("THEFRIKC", userInformation)
+    console.log("THEFRIKC", userInformation);
     if (inputData.name.length > 0) {
       // userInformation.filter((rest) => {
       // return rest.includes(inputData.name)
       // console.log("REST NAME", rest)
       // })
     } else if (inputData.type.length > 0) {
-
     } else if (inputData.price.length > 0) {
-
     } else {
       setUserInformation(props.getUser());
     }
@@ -129,7 +124,6 @@ const Dashboard = props => {
   // useEffect(() => {
   //   inputData.filter()
   // }, [inputData])
-
 
   // window.onload = setUserInformation(props.getUser());
   console.log("This is REst", props.user.restaurant);
@@ -144,39 +138,52 @@ const Dashboard = props => {
         <a href="/foodform">Add Review</a>
       </Header>
       <SearchForms className="search-forms">
-        <input type="text" name="name" placeholder="Name of Resaurant" onChange={monitorInput} />
-        <input type="text" name="type" placeholder="Type of food" onChange={monitorInput} />
-        <input type="text" name="price" placeholder="Price" onChange={monitorInput} />
+        <input
+          type="text"
+          name="name"
+          placeholder="Name of Resaurant"
+          onChange={monitorInput}
+        />
+        <input
+          type="text"
+          name="type"
+          placeholder="Type of food"
+          onChange={monitorInput}
+        />
+        <input
+          type="text"
+          name="price"
+          placeholder="Price"
+          onChange={monitorInput}
+        />
       </SearchForms>
       <RestCards>
         {/* <FoodPicture src='https://images.unsplash.com/photo-1557872943-16a5ac26437e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1316&q=80'></FoodPicture> */}
         {props.user.restaurant
           ? props.user.restaurant.map(rest => {
-            return (
-              <>
-                <h3>{rest.restname}</h3>
-                <img src={rest.restphotos[1].photo}></img>
-                <h4>Horus: {rest.resthours}</h4>
-                <p>Location: {rest.restlocation}</p>
-                <button
-                  rest={rest}
-                  onClick={() => {
-                    console.log(rest);
-                    props.history.push(`/reviews/${rest.restid}`);
-                    return <Reviews data={rest.restid} />;
-                  }}
-                >
-                  View reviews
+              return (
+                <CardDiv>
+                  <h3>{rest.restname}</h3>
+                  <img src={rest.restphotos[1].photo}></img>
+                  <h4>Horus: {rest.resthours}</h4>
+                  <p>Location: {rest.restlocation}</p>
+                  <button
+                    rest={rest}
+                    onClick={() => {
+                      console.log(rest);
+                      props.history.push(`/reviews/${rest.restid}`);
+                      return <Reviews data={rest.restid} />;
+                    }}
+                  >
+                    View reviews
                   </button>
-              </>
-            );
-          })
+                </CardDiv>
+              );
+            })
           : null}
-        <h2>{props.user.username}</h2>
       </RestCards>
-      {window.onload = () => props.getUser()}
+      {(window.onload = () => props.getUser())}
     </PageContainer>
-
   );
 };
 
