@@ -24,29 +24,47 @@ const Header = styled.h2`
   font-family: Chinese Rocks;
 `;
 
+const StyledForm = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+
+  @media (min-width: 500px) {
+  }
+  @media (min-width: 1200px) {
+  }
+`;
+
 const FoodForm = props => {
   const [reviewData, setReviewData] = useState({});
   const reviewDataInput = e => {
     setReviewData({ ...reviewData, [e.target.name]: e.target.value });
-    console.log(reviewData)
+    console.log(reviewData);
   };
 
   return (
     <div className="foodform">
-      <Form >
+      <StyledForm>
         <Header>
           <h2>Create a Review</h2>
         </Header>
-        <Field component="select" className="restaurant" name="restname" onChange={reviewDataInput}>
+
+        <Field
+          component="select"
+          className="restaurant"
+          name="restname"
+          onChange={reviewDataInput}
+        >
           {props.user.restaurant
             ? props.user.restaurant.map((rest, i) => {
-              return (
-                <>
-                  {/* {console.log(i, rest.restname)} */}
-                  <option key={i}>{rest.restname}</option>
-                </>
-              );
-            })
+                return (
+                  <>
+                    {/* {console.log(i, rest.restname)} */}
+                    <option key={i}>{rest.restname}</option>
+                  </>
+                );
+              })
             : null}
         </Field>
         <Field
@@ -88,8 +106,8 @@ const FoodForm = props => {
           onChange={reviewDataInput}
         />
         <button className="btn">Submit</button>
-      </Form>
-      {window.onload = () => props.getUser()}
+      </StyledForm>
+      {(window.onload = () => props.getUser())}
     </div>
   );
 };
@@ -109,7 +127,6 @@ const FormikFoodForm = withFormik({
       .catch(err => console.log(err.res));
   },
 })(FoodForm);
-
 
 const mapStateToProps = state => {
   return {
