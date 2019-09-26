@@ -42,6 +42,12 @@ const initialState = {
 function reducer(state = initialState, action) {
   console.log("State", state);
   switch (action.type) {
+    case "CREATE_REVIEW_SUCCESS":
+      return {
+        ...state,
+        isFetching: false,
+        error: ""
+      };
     case CREATE_REST_START:
       return {
         ...state,

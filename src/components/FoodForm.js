@@ -14,8 +14,9 @@ import React, { useState, useEffect } from "react";
 import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import defaultFood from "../images/default_food.jpg";
 import { connect } from "react-redux";
-import { getUser } from "../actions/actions";
+import { getUser, createReview } from "../actions/actions";
 import { axiosWithAuth } from "../axios/axiosWithAuth";
 import styled from "styled-components";
 
@@ -25,71 +26,108 @@ const Header = styled.h2`
 `;
 
 const FoodForm = props => {
-  const [reviewData, setReviewData] = useState({});
+  const [reviewData, setReviewData] = useState({
+    menuitemname: "",
+    photomenu: defaultFood,
+    itemprice: "",
+    itemrating: "",
+    shortreview: "",
+    restname: "",
+    cuisinetype: ""
+  });
   const reviewDataInput = e => {
     setReviewData({ ...reviewData, [e.target.name]: e.target.value });
-    console.log(reviewData)
+    console.log(reviewData);
   };
 
   return (
     <div className="foodform">
-      <Form >
+      <Form
+        onSubmit={e => {
+          e.preventDefault();
+          let idForAxios = 0;
+          let uploadData = {
+            ...reviewData,
+            restname: document.getElementById("choose-rest").value,
+            itemprice: parseInt(reviewData.itemprice)
+          };
+
+          // Finds restraunt's id that was chosen by a user at dropdown.
+          if (props.user.restaurant) {
+            props.user.restaurant.map((rest, i) => {
+              if (rest.restname === uploadData.restname) {
+                idForAxios = rest.restid;
+              }
+            });
+          }
+
+          console.log("Submitted", uploadData);
+          console.log("Submitted id", parseInt(idForAxios));
+          // props.createReview(idForAxios, uploadData);
+          // props.getUser();
+          // props.history.push("/");
+        }}
+      >
         <Header>
           <h2>Create a Review</h2>
         </Header>
-        <Field component="select" className="restaurant" name="restname" onChange={reviewDataInput}>
+        <Field
+          component="select"
+          id="choose-rest"
+          className="restaurant"
+          name="restname"
+          onChange={reviewDataInput}
+        >
           {props.user.restaurant
             ? props.user.restaurant.map((rest, i) => {
-              return (
-                <>
-                  {/* {console.log(i, rest.restname)} */}
-                  <option key={i}>{rest.restname}</option>
-                </>
-              );
-            })
+                return (
+                  <>
+                    <option key={i}>{rest.restname}</option>
+                  </>
+                );
+              })
             : null}
         </Field>
         <Field
           type="text"
-          name="restype"
-          placeholder="Restaurant type"
-          onChange={reviewDataInput}
-        />
-
-        <Field
-          type="text"
-          name="cuisinetype"
+          name="menuitemname"
           placeholder="Food item"
           onChange={reviewDataInput}
         />
         <Field
           type="text"
-          name="foodprice"
+          name="photomenu"
+          placeholder="URL photo"
+          onChange={reviewDataInput}
+        />
+        <Field
+          type="text"
+          name="cuisinetype"
+          placeholder="Cuisine type"
+          onChange={reviewDataInput}
+        />
+        <Field
+          type="text"
+          name="itemprice"
           placeholder="Food price"
           onChange={reviewDataInput}
         />
         <Field
           type="text"
-          name="visitdate"
-          placeholder="Date of visit"
-          onChange={reviewDataInput}
-        />
-        <Field
-          type="text"
-          name="foodrating"
+          name="itemrating"
           placeholder="Food rating"
           onChange={reviewDataInput}
         />
         <Field
           component="textarea"
           type="text"
-          name="notes"
+          name="shortreview"
           placeholder="Other comments"
           onChange={reviewDataInput}
         />
         <button className="btn">Submit</button>
       </Form>
-      {window.onload = () => props.getUser()}
+      {(window.onload = () => props.getUser())}
     </div>
   );
 };
@@ -97,7 +135,7 @@ const FormikFoodForm = withFormik({
   mapPropsToValues({ restname, item }) {
     return {
       restaurant: restname || "",
-      item: item || "",
+      item: item || ""
     };
   },
   handleSubmit(values, { setStatus }) {
@@ -107,17 +145,16 @@ const FormikFoodForm = withFormik({
         setStatus(res.data);
       })
       .catch(err => console.log(err.res));
-  },
+  }
 })(FoodForm);
-
 
 const mapStateToProps = state => {
   return {
-    user: state.user,
+    user: state.user
   };
 };
 
 export default connect(
   mapStateToProps,
-  { getUser }
+  { getUser, createReview }
 )(FormikFoodForm);

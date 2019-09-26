@@ -82,6 +82,20 @@ export const createRest = props => dispatch => {
     .catch(err => dispatch({ type: CREATE_REST_FAIL, payload: err }));
 };
 
+export const createReview = (restid, props) => dispatch => {
+  dispatch({ type: "CREATE_REVIEW_START" });
+  axiosWithAuth()
+    .post(
+      `https://sethnadu-foodie-bw.herokuapp.com/user/restaurant/${restid}/reviews`,
+      props
+    )
+    .then(res => {
+      console.log("create review respons", res.data);
+      dispatch({ type: "CREATE_REVIEW_SUCCESS", payload: res.data });
+    })
+    .catch(err => dispatch({ type: "CREATE_REVIEW_FAIL", payload: err }));
+};
+
 export const getUser = () => dispatch => {
   console.log("got here to get");
   dispatch({ type: USER_FETCH_START });
@@ -106,6 +120,17 @@ export const getRestaurant = id => dispatch => {
     .catch(err => dispatch({ type: RESTAURANT_FETCH_FAIL, payload: err }));
 };
 
+export const editRest = (id, rest) => dispatch => {
+  console.log(id, rest);
+  dispatch({ type: "EDIT_REST_START" });
+  axiosWithAuth()
+    .put(`https://sethnadu-foodie-bw.herokuapp.com/user/restaurant/${id}`, rest)
+    .then(res => {
+      console.log("edited user");
+    })
+    .catch(err => dispatch({ type: "EDIT_REST_FAIL", payload: err }));
+};
+
 export const editUser = (id, user) => dispatch => {
   console.log(id, user);
   dispatch({ type: EDIT_USER_START });
@@ -124,4 +149,13 @@ export const deleteUSER = id => dispatch => {
     .delete(`http://localhost:5000/api/USER/${id}`)
     .then(console.log("deleted"))
     .catch(err => dispatch({ type: DELETE_USER_FAIL, payload: err }));
+};
+
+export const deleteRest = id => dispatch => {
+  console.log("delete id", id);
+  dispatch({ type: "DELETE_REST_START" });
+  axiosWithAuth()
+    .delete(`https://sethnadu-foodie-bw.herokuapp.com/user/restaurant/${id}`)
+    .then(console.log("deleted"))
+    .catch(err => dispatch({ type: "DELETE_REST_FAIL", payload: err }));
 };

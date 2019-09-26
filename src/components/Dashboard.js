@@ -20,7 +20,7 @@ import defaultFood from "../images/default_food.jpg";
 import profilePicture from "../images/defaultuser.png";
 import Reviews from "./Reviews";
 import { connect } from "react-redux";
-import { getUser } from "../actions/actions";
+import { getUser, editRest, deleteRest } from "../actions/actions";
 
 const HeaderImage = styled.img`
   height: 5%;
@@ -82,15 +82,15 @@ const RestCards = styled.div`
 `;
 
 const CardDiv = styled.div`
-  height: 450px;
-  border-radius: 10%;
+  height: auto;
+  border-radius: 2em;
   border: 2px solid #b55e1c;
-  margin: 40px;
+  margin: 30px;
   overflow: hidden;
   background: white;
   img {
     width: 300px;
-    height: 250px;
+    height: 230px;
     border-radius: 10%;
   }
 `;
@@ -189,6 +189,26 @@ const Dashboard = props => {
                 >
                   View reviews
                 </button>
+                <div>
+                  <button
+                    className="btn-3"
+                    onClick={() => {
+                      props.history.push(`/addrestaurant/${rest.restid}`);
+                    }}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="btn-3"
+                    onClick={() => {
+                      console.log("Delete");
+                      props.deleteRest(rest.restid);
+                      // return <Reviews data={rest.restid} />;
+                    }}
+                  >
+                    Delete
+                  </button>
+                </div>
               </CardDiv>
             );
           })
@@ -217,5 +237,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { getUser }
+  { getUser, editRest, deleteRest }
 )(Dashboard);
