@@ -14,34 +14,47 @@ import React, { useState, useEffect } from "react";
 import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import { connect } from "react-redux";
+import { getUser } from "../actions/actions";
+import { axiosWithAuth } from "../axios/axiosWithAuth";
+import styled from "styled-components";
 
-const FoodForm = ({ values, errors, touched, status }) => {
+const Header = styled.h2`
+  color: #008b91;
+  font-family: Chinese Rocks;
+`;
+
+const FoodForm = props => {
+  console.log(props);
   const [reviewData, setReviewData] = useState([]);
   const [restaurants, setRestaraunts] = useState([]);
   const reviewDataInput = e => {
     setReviewData({ ...reviewData, [e.target.name]: e.target.value });
   };
 
-  useEffect(() => {
-    axios
-      .get(`sethnadu-foodie-bw.herokuapp.com/user/restaurants/`)
-      .then(response => {
-        console.log(response);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axiosWithAuth()
+  //     // .get(`https://sethnadu-foodie-bw.herokuapp.com/user/restaurants`)
+  //     .then(response => {
+  //       console.log(response);
+  //     })
+  //     .catch(error => {
+  //       console.log(error);
+  //     });
+  // }, []);
 
-  useEffect(() => {
-    if (status) {
-      setReviewData([...reviewData, status]);
-    }
-  }, [status]);
+  // useEffect(() => {
+  //   if (status) {
+  //     setReviewData([...reviewData, status]);
+  //   }
+  // }, [status]);
 
   return (
     <div className="foodform">
       <Form>
+        <Header>
+          <h2>Create a Review</h2>
+        </Header>
         <Field component="select" className="restaurant" name="restname">
           <option>Please Choose an Option</option>
           <option>Test</option>
@@ -87,14 +100,13 @@ const FoodForm = ({ values, errors, touched, status }) => {
       </Form>
       {reviewData.map((data, i) => (
         <ul key={i}>
-          <li>Restaurant Name:{data.restname}</li>
-          <li>Type: {data.restype}</li>
-          <li>Food item: {data.cuisinetype}</li>
-          <li>Food price: {data.foodprice}</li>
-          <li>Food item: {data.cuisinetype}</li>
-          <li>Date of visit: {data.visitdate}</li>
-          <li>Food rating: {data.foodrating}</li>
-          <li>Food item: {data.cuisinetype}</li>
+          <li>Restaurant Name: Burger King</li>
+          <li>Type: Fast Food</li>
+          <li>Food item: Fast Food</li>
+          <li>Food price: Cheap</li>
+          <li>Food item: Burger</li>
+          <li>Date of visit: January 13</li>
+          <li>Food rating: 10</li>
         </ul>
       ))}
     </div>
@@ -116,4 +128,14 @@ const FormikFoodForm = withFormik({
       .catch(err => console.log(err.res));
   },
 })(FoodForm);
-export default FormikFoodForm;
+
+const mapStateToProps = state => {
+  return {
+    reviews: state.user.restaurant,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { getUser }
+)(FoodForm);
