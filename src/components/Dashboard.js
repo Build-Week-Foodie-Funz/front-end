@@ -22,6 +22,8 @@ import Reviews from "./Reviews";
 import { connect } from "react-redux";
 import { getUser } from "../actions/actions";
 
+
+
 const HeaderImage = styled.img`
   height: 5%;
   border-radius: 10%;
@@ -45,6 +47,7 @@ const UsersName = styled.h2`
   width: 200px;
   text-align: left;
   padding: 0 30px;
+  font-family: "Chinese Rocks";
 `;
 
 const SearchForms = styled.div`
@@ -88,6 +91,7 @@ const CardDiv = styled.div`
   margin: 40px;
   overflow: hidden;
   background: white;
+  height: auto;
   img {
     width: 300px;
     height: 250px;
@@ -95,8 +99,8 @@ const CardDiv = styled.div`
   }
 `;
 
-const DashButton = styled.button`
-  width: 150px;
+const DashButtons = styled.button`
+  width: 70%;
 `;
 
 
@@ -147,7 +151,7 @@ const Dashboard = props => {
         <ProfileImage
           src={props.user.photo ? props.user.photo : profilePicture}
         ></ProfileImage>
-        <UsersName>Hello, {props.user.username}!</UsersName>
+        <UsersName className='rocks'>Hello, {props.user.username}!</UsersName>
         <a href="/editprofile">Edit Profile</a>
         <a href="/addrestaurant">Add Restaurant</a>
         <a href="/foodform">Add Review</a>
@@ -180,8 +184,9 @@ const Dashboard = props => {
               <h4>Horus: {rest.resthours}</h4>
               <p>Location: {rest.restlocation}</p>
               <p>{rest.restrating}</p>
-              <button
+              <DashButtons
                 className="btn-2"
+                id='dash-btn'
                 rest={rest}
                 onClick={() => {
                   props.history.push(`/reviews/${rest.restid}`);
@@ -189,7 +194,7 @@ const Dashboard = props => {
                 }}
               >
                 View reviews
-                </button>
+                </DashButtons >
             </CardDiv>
           );
         })
@@ -207,7 +212,7 @@ const Dashboard = props => {
                 <h4>Horus: {rest.resthours}</h4>
                 <p>Location: {rest.restlocation}</p>
                 <p>{rest.restrating}</p>
-                <button
+                <DashButtons
                   className="btn-2"
                   rest={rest}
                   onClick={() => {
@@ -216,7 +221,7 @@ const Dashboard = props => {
                   }}
                 >
                   View reviews
-                </button>
+                </DashButtons>
               </CardDiv>
             );
           })
