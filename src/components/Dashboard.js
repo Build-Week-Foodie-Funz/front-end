@@ -41,6 +41,8 @@ const ProfileImage = styled.img`
 const UsersName = styled.h2`
   font-size: 2rem;
   width: 200px;
+  text-align: left;
+  padding: 0 30px;
 `;
 
 const SearchForms = styled.div`
@@ -85,6 +87,7 @@ height: 450px;
   border: 2px solid #B55E1C;
   margin: 40px;
   overflow: hidden;
+  background: white;
   img{
     width: 300px;
     height: 250px;
@@ -141,7 +144,7 @@ const Dashboard = props => {
       <Header>
         <HeaderImage src="https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"></HeaderImage>
         <ProfileImage src="https://images.unsplash.com/photo-1512794268250-65fd4cd7441f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"></ProfileImage>
-        <UsersName>Hello, {props.user.username}!</UsersName>
+        <UsersName>Hello, Jimmy Bobby!</UsersName>
         <a href="/editprofile">Edit Profile</a>
         <a href="/addrestaurant">Add Restaurant</a>
         <a href="/foodform">Add Review</a>
@@ -161,7 +164,9 @@ const Dashboard = props => {
                 <h3>{rest.restname}</h3>
                 <h4>Horus: {rest.resthours}</h4>
                 <p>Location: {rest.restlocation}</p>
+                <p>{rest.restrating}</p> 
                 <button
+                  className='btn-2'
                   rest={rest}
                   onClick={() => {
                     console.log(rest);
