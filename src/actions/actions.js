@@ -74,12 +74,12 @@ export const getUser = () => dispatch => {
     .catch(err => dispatch({ type: USER_FETCH_FAIL, payload: err }));
 };
 
-export const saveEdit = (id, USER) => dispatch => {
+export const editUser = (id, user) => dispatch => {
   dispatch({ type: EDIT_USER_START });
   axiosWithAuth()
-    .put(`http://localhost:5000/api/USER/${id}`, USER)
+    .put(`http://localhost:5000/api/USER/${id}`, user)
     .then(res => {
-      getUser();
+      console.log("edited user");
     })
     .catch(err => dispatch({ type: EDIT_USER_FAIL, payload: err }));
 };

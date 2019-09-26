@@ -62,7 +62,7 @@ function reducer(state = initialState, action) {
     case EDIT_USER_SUCCESS:
       return {
         ...state,
-        USER: [...action.payload],
+        user: [...action.payload],
         isFetching: false,
         error: ""
       };
