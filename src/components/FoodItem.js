@@ -16,7 +16,7 @@ import React, { useState, useEffect } from "react";
 import Formik, { withFormik, Field, Form } from "formik";
 import styled from "styled-components";
 
-const FoodItem = ({ errors, status, values, touched }) => {
+const FoodItem = ({ status }) => {
   const [item, setItem] = useState([]);
   useEffect(() => {
     if (status) {
