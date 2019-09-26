@@ -23,6 +23,10 @@ export const CREATE_USER_START = "CREATE_USER_START";
 export const CREATE_USER_SUCCESS = "CREATE_USER_SUCCESS";
 export const CREATE_USER_FAIL = "CREATE_USER_FAIL";
 
+export const CREATE_REST_START = "CREATE_REST_START";
+export const CREATE_REST_SUCCESS = "CREATE_REST_SUCCESS";
+export const CREATE_REST_FAIL = "CREATE_REST_FAIL";
+
 export const RESTAURANT_FETCH_START = "RESTAURANT_FETCH_START";
 export const RESTAURANT_FETCH_SUCCESS = "RESTAURANT_FETCH_SUCCESS";
 export const RESTAURANT_FETCH_FAIL = "RESTAURANT_FETCH_FAIL";
@@ -67,6 +71,17 @@ export const createUser = props => dispatch => {
     .catch(err => dispatch({ type: CREATE_USER_FAIL, payload: err }));
 };
 
+export const createRest = props => dispatch => {
+  dispatch({ type: CREATE_REST_START });
+  axiosWithAuth()
+    .post("https://sethnadu-foodie-bw.herokuapp.com/user/restaurant", props)
+    .then(res => {
+      console.log("create rest respons", res.data);
+      dispatch({ type: CREATE_REST_SUCCESS, payload: res.data });
+    })
+    .catch(err => dispatch({ type: CREATE_REST_FAIL, payload: err }));
+};
+
 export const getUser = () => dispatch => {
   console.log("got here to get");
   dispatch({ type: USER_FETCH_START });
@@ -78,6 +93,7 @@ export const getUser = () => dispatch => {
     .catch(err => dispatch({ type: USER_FETCH_FAIL, payload: err }));
 };
 
+// Getting restraunt array of reviews
 export const getRestaurant = id => dispatch => {
   dispatch({ type: RESTAURANT_FETCH_START });
   axiosWithAuth()
@@ -91,19 +107,10 @@ export const getRestaurant = id => dispatch => {
 };
 
 export const editUser = (id, user) => dispatch => {
+  console.log(id, user);
   dispatch({ type: EDIT_USER_START });
   axiosWithAuth()
-    .put(
-      `https://sethnadu-foodie-bw.herokuapp.com/users/user/${id}`,
-      user,
-
-      {
-        headers: {
-          Authorization: `Basic ${btoa("lambda-client:lambda-secret")}`,
-          "Content-Type": "application/x-www-form-urlencoded"
-        }
-      }
-    )
+    .put(`https://sethnadu-foodie-bw.herokuapp.com/users/user/${id}`, user)
     .then(res => {
       console.log("edited user");
     })

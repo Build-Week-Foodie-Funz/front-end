@@ -20,7 +20,7 @@ import Formik, {
   ErrorMessage
 } from "formik";
 import styled from "styled-components";
-import { editUser } from "../actions/actions";
+import { editUser, getUser } from "../actions/actions";
 import profilePicture from "../images/defaultuser.png";
 import * as Yup from "yup";
 import axios from "axios";
@@ -81,7 +81,6 @@ const EditUser = props => {
   const [userUpdate, setUserUpdate] = useState({
     username: "",
     email: "",
-    password: "",
     location: "",
     photo: ""
   });
@@ -97,14 +96,15 @@ const EditUser = props => {
         id="update-form"
         onSubmit={e => {
           e.preventDefault();
-          props.editUser({
-            username: userUpdate.user || props.user.username,
-            // email: userUpdate.email || props.user.email,
-            // location: userUpdate.location || props.user.location,
-            // password: userUpdate.password || props.user.password,
+
+          let newData = {
+            username: userUpdate.username || props.user.username,
+            email: userUpdate.email || props.user.email,
+            location: userUpdate.location || props.user.location,
             photo: userUpdate.photo || props.user.photo
-          });
-          console.log("submitted data: ", userUpdate);
+          };
+          props.editUser(props.user.userid, newData);
+          props.history.push("/");
         }}
       >
         <UserContainer>
@@ -133,15 +133,6 @@ const EditUser = props => {
             </UserInput>
             <UserInput>
               <StyledField
-                id="password-input"
-                type="password"
-                name="password"
-                placeholder="Password"
-                onChange={updateUserInfo}
-              />
-            </UserInput>
-            <UserInput>
-              <StyledField
                 id="location-input"
                 type="text"
                 name="location"
@@ -160,7 +151,9 @@ const EditUser = props => {
             </UserInput>
           </InputContainer>
           <ButtonContainer>
-            <UserImage src={profilePicture}></UserImage>
+            <UserImage
+              src={props.user.photo ? props.user.photo : profilePicture}
+            ></UserImage>
             <button type="submit" className="btn">
               Update Profile
             </button>
@@ -174,6 +167,11 @@ const EditUser = props => {
               Reset changes
             </button>
           </ButtonContainer>
+          {
+            (window.onload = () => {
+              props.getUser();
+            })
+          }
         </UserContainer>
       </Form>
     </>
@@ -181,12 +179,11 @@ const EditUser = props => {
 };
 
 const FormikEditUser = withFormik({
-  mapPropsToValue({ username, email, password, location, photo }) {
+  mapPropsToValue({ username, email, location, photo }) {
     return {
       username: username || "",
       email: email || "",
       location: location || "",
-      password: password || "",
       photo: photo || ""
     };
   }
@@ -205,5 +202,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { editUser }
+  { editUser, getUser }
 )(FormikEditUser);

@@ -16,6 +16,8 @@ import React, { useState, useEffect } from "react";
 import { axiosWithAuth } from "../axios/axiosWithAuth";
 import { userInfo } from "os";
 import styled from "styled-components";
+import defaultFood from "../images/default_food.jpg";
+import profilePicture from "../images/defaultuser.png";
 import Reviews from "./Reviews";
 import { connect } from "react-redux";
 import { getUser } from "../actions/actions";
@@ -63,7 +65,6 @@ const Header = styled.header`
   display: flex;
   flex-wrap: wrap;
   a {
-  
     position: relative;
     margin: 20px;
     float: right;
@@ -72,12 +73,12 @@ const Header = styled.header`
 `;
 
 const RestCards = styled.div`
-display: flex;
-flex-direction: row;
-flex-wrap: wrap;
-justify-content: center;
-align-items: center;
-width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 `;
 
 const CardDiv = styled.div` 
@@ -87,8 +88,7 @@ const CardDiv = styled.div`
   margin: 40px;
   overflow: hidden;
   background: white;
-  height: auto;
-  img{
+  img {
     width: 300px;
     height: 250px;
     border-radius: 10%;
@@ -101,8 +101,7 @@ const DashButton = styled.button`
 
 
 const Dashboard = props => {
-  // Pull from state originally, if filtered then chnge it up accordingly
-  const [userInformation, setUserInformation] = useState();
+  const [userInformation, setUserInformation] = useState({});
 
   // storing the 3 inputs inside an object {
   // field1: "", field2: "", field: ""
@@ -125,7 +124,7 @@ const Dashboard = props => {
 
   const monitorInput = e => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
-    // console.log(inputData)
+    console.log(inputData);
   };
 
   const searchPosts = e => {
@@ -145,7 +144,9 @@ const Dashboard = props => {
     <PageContainer>
       <Header>
         <HeaderImage src="https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"></HeaderImage>
-        <ProfileImage src="https://images.unsplash.com/photo-1512794268250-65fd4cd7441f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"></ProfileImage>
+        <ProfileImage
+          src={props.user.photo ? props.user.photo : profilePicture}
+        ></ProfileImage>
         <UsersName>Hello, {props.user.username}!</UsersName>
         <a href="/editprofile">Edit Profile</a>
         <a href="/addrestaurant">Add Restaurant</a>
@@ -167,18 +168,47 @@ const Dashboard = props => {
       </SearchForms>
       <RestCards>
         {/* <FoodPicture src='https://images.unsplash.com/photo-1557872943-16a5ac26437e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1316&q=80'></FoodPicture> */}
-        {props.user.restaurant
-          ? props.user.restaurant.map(rest => {
+        {filteredRests.length > 0 ? filteredRests.map(rest => {
+          return (
+            <CardDiv>
+              <img
+                src={
+                  rest.restphotos[0] ? rest.restphotos[0].photo : defaultFood
+                }
+              ></img>
+              <h3>{rest.restname}</h3>
+              <h4>Horus: {rest.resthours}</h4>
+              <p>Location: {rest.restlocation}</p>
+              <p>{rest.restrating}</p>
+              <button
+                className="btn-2"
+                rest={rest}
+                onClick={() => {
+                  props.history.push(`/reviews/${rest.restid}`);
+                  return <Reviews data={rest.restid} />;
+                }}
+              >
+                View reviews
+                </button>
+            </CardDiv>
+          );
+        })
+          : null}
+        {filteredRests.length === 0 && props.user.restaurant ? (
+          props.user.restaurant.map(rest => {
             return (
               <CardDiv>
-                {/* <img src={rest.restphotos[0].photo}></img> */}
+                <img
+                  src={
+                    rest.restphotos[0] ? rest.restphotos[0].photo : defaultFood
+                  }
+                ></img>
                 <h3>{rest.restname}</h3>
                 <h4>Horus: {rest.resthours}</h4>
                 <p>Location: {rest.restlocation}</p>
                 <p>{rest.restrating}</p>
-                <DashButton
-                  id='dash-btn'
-                  className='btn-2'
+                <button
+                  className="btn-2"
                   rest={rest}
                   onClick={() => {
                     props.history.push(`/reviews/${rest.restid}`);
@@ -186,20 +216,28 @@ const Dashboard = props => {
                   }}
                 >
                   View reviews
-                  </DashButton>
+                </button>
               </CardDiv>
             );
           })
-          : null}
+        ) : null}
       </RestCards>
-      {(window.onload = () => props.getUser())}
+      {
+        (window.onload = () => {
+          props.getUser();
+          setTimeout(function () {
+            setUserInformation({ ...props.user });
+            console.log("frick on load", userInformation);
+          }, 1000);
+        })
+      }
     </PageContainer>
   );
 };
 
 const mapStateToProps = state => {
   return {
-    user: state.user,
+    user: state.user
   };
 };
 
