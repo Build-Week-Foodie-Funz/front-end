@@ -25,6 +25,18 @@ const Header = styled.h2`
   font-family: Chinese Rocks;
 `;
 
+const StyledForm = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+
+  @media (min-width: 500px) {
+  }
+  @media (min-width: 1200px) {
+  }
+`;
+
 const FoodForm = props => {
   const [reviewData, setReviewData] = useState({
     menuitemname: "",

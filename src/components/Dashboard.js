@@ -45,6 +45,7 @@ const UsersName = styled.h2`
   width: 200px;
   text-align: left;
   padding: 0 30px;
+  font-family: "Chinese Rocks";
 `;
 
 const SearchForms = styled.div`
@@ -88,6 +89,7 @@ const CardDiv = styled.div`
   margin: 30px;
   overflow: hidden;
   background: white;
+  height: auto;
   img {
     width: 300px;
     height: 230px;
@@ -95,41 +97,49 @@ const CardDiv = styled.div`
   }
 `;
 
+const DashButtons = styled.button`
+  width: 70%;
+`;
+
 const Dashboard = props => {
   const [userInformation, setUserInformation] = useState({});
 
+  // storing the 3 inputs inside an object {
+  // field1: "", field2: "", field: ""
+  //}
   const [inputData, setInputData] = useState({
     name: "",
-    type: "",
-    price: ""
+    location: ""
   });
+
+  const [filteredRests, setfilteredRests] = useState([]);
+
+  useEffect(() => {
+    axiosWithAuth()
+      .get("https://sethnadu-foodie-bw.herokuapp.com/user/restaurants")
+      .then(res => {
+        setUserInformation(res);
+        console.log("this is your axios call", userInformation);
+      });
+  }, [monitorInput]);
 
   const monitorInput = e => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
     console.log(inputData);
   };
 
-  useEffect(() => {
-    if (inputData.name.length > 0) {
-      // {
-      //   userInformation
-      //     ? userInformation.restaurant.filter(rest => {
-      //         console.log("rest", rest);
-      //         // return rest.restname.includes(inputData.name)
-      //         // console.log("REST NAME", rest)
-      //       })
-      //     : null;
-      // }
-    } else if (inputData.type.length > 0) {
-    } else if (inputData.price.length > 0) {
-    } else {
-      setUserInformation({ ...props.user });
-      console.log("THEFRIKC", userInformation);
-    }
-  }, [inputData]);
+  const searchPosts = e => {
+    e.preventDefault();
+    const cards = props.user.restaurant.filter(rest => {
+      if (rest.restname.includes(inputData.name)) {
+        return rest;
+      }
+    });
+    setfilteredRests(cards);
+    console.log("CARDS", cards);
+  };
 
   // window.onload = setUserInformation(props.getUser());
-
   // console.log("This is REst", props.user.restaurant);
   return (
     <PageContainer>
@@ -138,12 +148,12 @@ const Dashboard = props => {
         <ProfileImage
           src={props.user.photo ? props.user.photo : profilePicture}
         ></ProfileImage>
-        <UsersName>Hello, {props.user.username}!</UsersName>
+        <UsersName className="rocks">Hello, {props.user.username}!</UsersName>
         <a href="/editprofile">Edit Profile</a>
         <a href="/addrestaurant">Add Restaurant</a>
         <a href="/foodform">Add Review</a>
       </Header>
-      <SearchForms className="search-forms">
+      <SearchForms className="search-forms" onChange={searchPosts}>
         <input
           type="text"
           name="name"
@@ -152,69 +162,92 @@ const Dashboard = props => {
         />
         <input
           type="text"
-          name="type"
-          placeholder="Type of food"
-          onChange={monitorInput}
-        />
-        <input
-          type="text"
-          name="price"
-          placeholder="Price"
+          name="location"
+          placeholder="Restaurant Location"
           onChange={monitorInput}
         />
       </SearchForms>
       <RestCards>
         {/* <FoodPicture src='https://images.unsplash.com/photo-1557872943-16a5ac26437e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1316&q=80'></FoodPicture> */}
-        {props.user.restaurant ? (
-          props.user.restaurant.map(rest => {
-            return (
-              <CardDiv>
-                <img
-                  src={
-                    rest.restphotos[0] ? rest.restphotos[0].photo : defaultFood
-                  }
-                ></img>
-                <h3>{rest.restname}</h3>
-                <h4>Horus: {rest.resthours}</h4>
-                <p>Location: {rest.restlocation}</p>
-                <p>{rest.restrating}</p>
-                <button
-                  className="btn-2"
-                  rest={rest}
-                  onClick={() => {
-                    console.log(rest);
-                    props.history.push(`/reviews/${rest.restid}`);
-                    return <Reviews data={rest.restid} />;
-                  }}
-                >
-                  View reviews
-                </button>
-                <div>
-                  <button
-                    className="btn-3"
+        {filteredRests.length > 0
+          ? filteredRests.map(rest => {
+              return (
+                <CardDiv>
+                  <img
+                    src={
+                      rest.restphotos[0]
+                        ? rest.restphotos[0].photo
+                        : defaultFood
+                    }
+                  ></img>
+                  <h3>{rest.restname}</h3>
+                  <h4>Horus: {rest.resthours}</h4>
+                  <p>Location: {rest.restlocation}</p>
+                  <p>{rest.restrating}</p>
+                  <DashButtons
+                    className="btn-2"
+                    id="dash-btn"
+                    rest={rest}
                     onClick={() => {
-                      props.history.push(`/addrestaurant/${rest.restid}`);
+                      props.history.push(`/reviews/${rest.restid}`);
+                      return <Reviews data={rest.restid} />;
                     }}
                   >
-                    Edit
-                  </button>
-                  <button
-                    className="btn-3"
+                    View reviews
+                  </DashButtons>
+                </CardDiv>
+              );
+            })
+          : null}
+        {filteredRests.length === 0 && props.user.restaurant
+          ? props.user.restaurant.map(rest => {
+              return (
+                <CardDiv>
+                  <img
+                    src={
+                      rest.restphotos[0]
+                        ? rest.restphotos[0].photo
+                        : defaultFood
+                    }
+                  ></img>
+                  <h3>{rest.restname}</h3>
+                  <h4>Horus: {rest.resthours}</h4>
+                  <p>Location: {rest.restlocation}</p>
+                  <p>{rest.restrating}</p>
+                  <DashButtons
+                    className="btn-2"
+                    rest={rest}
                     onClick={() => {
-                      console.log("Delete");
-                      props.deleteRest(rest.restid);
-                      // return <Reviews data={rest.restid} />;
+                      props.history.push(`/reviews/${rest.restid}`);
+                      return <Reviews data={rest.restid} />;
                     }}
                   >
-                    Delete
-                  </button>
-                </div>
-              </CardDiv>
-            );
-          })
-        ) : (
-          <h2>Loading..</h2>
-        )}
+                    View reviews
+                  </DashButtons>
+                  <div>
+                    <button
+                      className="btn-3"
+                      onClick={() => {
+                        props.history.push(`/addrestaurant/${rest.restid}`);
+                      }}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="btn-3"
+                      onClick={() => {
+                        console.log("Delete");
+                        props.deleteRest(rest.restid);
+                        // return <Reviews data={rest.restid} />;
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </CardDiv>
+              );
+            })
+          : null}
       </RestCards>
       {
         (window.onload = () => {
