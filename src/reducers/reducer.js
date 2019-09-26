@@ -27,130 +27,152 @@ import {
   RESTAURANT_FETCH_SUCCESS,
   RESTAURANT_FETCH_START,
   RESTAURANT_FETCH_FAIL,
+  CREATE_REST_FAIL,
+  CREATE_REST_SUCCESS,
+  CREATE_REST_START
 } from "../actions/actions";
 
 const initialState = {
   user: {},
   reviews: [],
   error: "",
-  isFetching: false,
+  isFetching: false
 };
 
 function reducer(state = initialState, action) {
   console.log("State", state);
   switch (action.type) {
+    case CREATE_REST_START:
+      return {
+        ...state,
+        isFetching: true,
+        error: ""
+      };
+    case CREATE_REST_SUCCESS:
+      return {
+        ...state,
+        isFetching: false,
+        error: ""
+      };
+    case CREATE_REST_FAIL:
+      console.log("Post failed");
+      return {
+        ...state,
+        error: action.payload
+      };
+
     case RESTAURANT_FETCH_START:
       return {
         ...state,
         isFetching: true,
-        error: "",
+        error: ""
       };
     case RESTAURANT_FETCH_SUCCESS:
-      console.log("action, success", action.payload);
+      // console.log("action, success", action.payload);
       return {
         ...state,
         reviews: [...action.payload],
         isFetching: false,
-        error: "",
+        error: ""
       };
     case RESTAURANT_FETCH_FAIL:
       return {
         ...state,
-        error: action.payload,
+        error: action.payload
       };
 
     case DELETE_USER_START:
       return {
         ...state,
         isFetching: true,
-        error: "",
+        error: ""
       };
     case DELETE_USER_SUCCESS:
       return {
         ...state,
         isFetching: false,
-        error: "",
+        error: ""
       };
     case DELETE_USER_FAIL:
       return {
         ...state,
-        error: action.payload,
+        error: action.payload
       };
 
     case EDIT_USER_START:
       return {
         ...state,
         isFetching: true,
-        error: "",
+        error: ""
       };
     case EDIT_USER_SUCCESS:
       return {
         ...state,
         user: [...action.payload],
         isFetching: false,
-        error: "",
+        error: ""
       };
     case EDIT_USER_FAIL:
       return {
         ...state,
-        error: action.payload,
+        error: action.payload
       };
 
     case USER_FETCH_START:
       return {
         ...state,
         isFetching: true,
-        error: "",
+        error: ""
       };
     case USER_FETCH_SUCCESS:
-      console.log("action, success", action.payload);
+      // console.log("action, success", action.payload);
       return {
         ...state,
         user: { ...action.payload },
         isFetching: false,
-        error: "",
+        error: ""
       };
     case USER_FETCH_FAIL:
       return {
         ...state,
-        error: action.payload,
+        error: action.payload
       };
     case INITIAL_FETCH_START:
       return {
         ...state,
         isFetching: true,
-        error: "",
+        error: ""
       };
     case INITIAL_FETCH_SUCCESS:
       return {
         ...state,
         friends: [...state.friends, ...action.payload],
         isFetching: false,
-        error: "",
+        error: ""
       };
     case INITIAL_FETCH_FAIL:
       return {
         ...state,
-        error: action.payload,
+        error: action.payload
       };
     case CREATE_USER_START:
       return {
         ...state,
         isFetching: true,
-        error: "",
+        error: ""
       };
     case CREATE_USER_SUCCESS:
-      console.log("The data receivved for the post new user", action.payload);
+      // console.log("The data receivved for the post new user", action.payload);
       return {
         ...state,
         isFetching: false,
-        error: "",
+        error: ""
       };
     case CREATE_USER_FAIL:
       console.log("Post failed");
       return {
         ...state,
-        error: action.payload,
+        error: action.payload
       };
     default:
       return state;
