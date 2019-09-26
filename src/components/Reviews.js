@@ -25,6 +25,9 @@ const Reviews = props => {
   );
 };
 
+// {window.onload = () => (props.getRestaurant(props.match.params.id))}
+
+
 const mapStateToProps = state => {
   return {
     restaurant: state.restaurant,

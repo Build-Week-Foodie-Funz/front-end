@@ -57,7 +57,7 @@ const NavigationBar = () => {
 			<LogoImage src={Logo} />
 			<LogoText>Foodie Fun</LogoText>
 			<Navigation>
-				<NavItem href="/">Login</NavItem>
+				<NavItem href="/login">Login</NavItem>
 				<NavItem href="/home">Marketing</NavItem>
 				<NavItem href="signup">Sign-Up</NavItem>
 			</Navigation>

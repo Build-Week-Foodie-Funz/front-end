@@ -25,39 +25,29 @@ const Header = styled.h2`
 `;
 
 const FoodForm = props => {
-  console.log(props);
-  const [reviewData, setReviewData] = useState([]);
-  const [restaurants, setRestaraunts] = useState([]);
+  const [reviewData, setReviewData] = useState({});
   const reviewDataInput = e => {
     setReviewData({ ...reviewData, [e.target.name]: e.target.value });
+    console.log(reviewData)
   };
-
-  // useEffect(() => {
-  //   axiosWithAuth()
-  //     // .get(`https://sethnadu-foodie-bw.herokuapp.com/user/restaurants`)
-  //     .then(response => {
-  //       console.log(response);
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //     });
-  // }, []);
-
-  // useEffect(() => {
-  //   if (status) {
-  //     setReviewData([...reviewData, status]);
-  //   }
-  // }, [status]);
 
   return (
     <div className="foodform">
-      <Form>
+      <Form >
         <Header>
           <h2>Create a Review</h2>
         </Header>
-        <Field component="select" className="restaurant" name="restname">
-          <option>Please Choose an Option</option>
-          <option>Test</option>
+        <Field component="select" className="restaurant" name="restname" onChange={reviewDataInput}>
+          {props.user.restaurant
+            ? props.user.restaurant.map((rest, i) => {
+              return (
+                <>
+                  {/* {console.log(i, rest.restname)} */}
+                  <option key={i}>{rest.restname}</option>
+                </>
+              );
+            })
+            : null}
         </Field>
         <Field
           type="text"
@@ -95,20 +85,11 @@ const FoodForm = props => {
           type="text"
           name="notes"
           placeholder="Other comments"
+          onChange={reviewDataInput}
         />
         <button className="btn">Submit</button>
       </Form>
-      {reviewData.map((data, i) => (
-        <ul key={i}>
-          <li>Restaurant Name: Burger King</li>
-          <li>Type: Fast Food</li>
-          <li>Food item: Fast Food</li>
-          <li>Food price: Cheap</li>
-          <li>Food item: Burger</li>
-          <li>Date of visit: January 13</li>
-          <li>Food rating: 10</li>
-        </ul>
-      ))}
+      {window.onload = () => props.getUser()}
     </div>
   );
 };
@@ -129,13 +110,14 @@ const FormikFoodForm = withFormik({
   },
 })(FoodForm);
 
+
 const mapStateToProps = state => {
   return {
-    reviews: state.user.restaurant,
+    user: state.user,
   };
 };
 
 export default connect(
   mapStateToProps,
   { getUser }
-)(FoodForm);
+)(FormikFoodForm);
