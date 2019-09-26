@@ -14,39 +14,40 @@ import React, { useState, useEffect } from "react";
 import { withFormik, Form, Field } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import { connect } from "react-redux";
+import { getUser } from "../actions/actions";
 import { axiosWithAuth } from "../axios/axiosWithAuth";
+import styled from "styled-components";
 
-const FoodForm = ({ values, errors, touched, status }) => {
-  const [reviewData, setReviewData] = useState([]);
-  const [restaurants, setRestaraunts] = useState([]);
+const Header = styled.h2`
+  color: #008b91;
+  font-family: Chinese Rocks;
+`;
+
+const FoodForm = props => {
+  const [reviewData, setReviewData] = useState({});
   const reviewDataInput = e => {
     setReviewData({ ...reviewData, [e.target.name]: e.target.value });
+    console.log(reviewData)
   };
-
-  useEffect(() => {
-    axiosWithAuth()
-      .get(`https://sethnadu-foodie-bw.herokuapp.com/user/restaurants`)
-      .then(response => {
-        console.log(response);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, []);
-
-  useEffect(() => {
-    if (status) {
-      setReviewData([...reviewData, status]);
-    }
-  }, [status]);
 
   return (
     <div className="foodform">
-      <Form>
-        <h2>Create a Review</h2>
-        <Field component="select" className="restaurant" name="restname">
-          <option>Please Choose an Option</option>
-          <option>Test</option>
+      <Form >
+        <Header>
+          <h2>Create a Review</h2>
+        </Header>
+        <Field component="select" className="restaurant" name="restname" onChange={reviewDataInput}>
+          {props.user.restaurant
+            ? props.user.restaurant.map((rest, i) => {
+              return (
+                <>
+                  {/* {console.log(i, rest.restname)} */}
+                  <option key={i}>{rest.restname}</option>
+                </>
+              );
+            })
+            : null}
         </Field>
         <Field
           type="text"
@@ -84,21 +85,11 @@ const FoodForm = ({ values, errors, touched, status }) => {
           type="text"
           name="notes"
           placeholder="Other comments"
+          onChange={reviewDataInput}
         />
         <button className="btn">Submit</button>
       </Form>
-      {reviewData.map((data, i) => (
-        <ul key={i}>
-          <li>Restaurant Name:{data.restname}</li>
-          <li>Type: {data.restype}</li>
-          <li>Food item: {data.cuisinetype}</li>
-          <li>Food price: {data.foodprice}</li>
-          <li>Food item: {data.cuisinetype}</li>
-          <li>Date of visit: {data.visitdate}</li>
-          <li>Food rating: {data.foodrating}</li>
-          <li>Food item: {data.cuisinetype}</li>
-        </ul>
-      ))}
+      {window.onload = () => props.getUser()}
     </div>
   );
 };
@@ -118,4 +109,15 @@ const FormikFoodForm = withFormik({
       .catch(err => console.log(err.res));
   },
 })(FoodForm);
-export default FormikFoodForm;
+
+
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { getUser }
+)(FormikFoodForm);

@@ -23,6 +23,10 @@ export const CREATE_USER_START = "CREATE_USER_START";
 export const CREATE_USER_SUCCESS = "CREATE_USER_SUCCESS";
 export const CREATE_USER_FAIL = "CREATE_USER_FAIL";
 
+export const RESTAURANT_FETCH_START = "RESTAURANT_FETCH_START";
+export const RESTAURANT_FETCH_SUCCESS = "RESTAURANT_FETCH_SUCCESS";
+export const RESTAURANT_FETCH_FAIL = "RESTAURANT_FETCH_FAIL";
+
 export const DELETE_USER_START = "DELETE_USER_START";
 export const DELETE_USER_SUCCESS = "DELETE_USER_SUCCESS";
 export const DELETE_USER_FAIL = "DELETE_USER_FAIL";
@@ -74,10 +78,32 @@ export const getUser = () => dispatch => {
     .catch(err => dispatch({ type: USER_FETCH_FAIL, payload: err }));
 };
 
+export const getRestaurant = id => dispatch => {
+  dispatch({ type: RESTAURANT_FETCH_START });
+  axiosWithAuth()
+    .get(
+      `https://sethnadu-foodie-bw.herokuapp.com/user/restaurants/${id}/reviews`
+    )
+    .then(res => {
+      dispatch({ type: RESTAURANT_FETCH_SUCCESS, payload: res.data });
+    })
+    .catch(err => dispatch({ type: RESTAURANT_FETCH_FAIL, payload: err }));
+};
+
 export const editUser = (id, user) => dispatch => {
   dispatch({ type: EDIT_USER_START });
   axiosWithAuth()
-    .put(`http://localhost:5000/api/USER/${id}`, user)
+    .put(
+      `https://sethnadu-foodie-bw.herokuapp.com/users/user/${id}`,
+      user,
+
+      {
+        headers: {
+          Authorization: `Basic ${btoa("lambda-client:lambda-secret")}`,
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
+      }
+    )
     .then(res => {
       console.log("edited user");
     })
@@ -89,6 +115,6 @@ export const deleteUSER = id => dispatch => {
   dispatch({ type: DELETE_USER_START });
   axiosWithAuth()
     .delete(`http://localhost:5000/api/USER/${id}`)
-    .then(console.log("u piece of shit"))
+    .then(console.log("deleted"))
     .catch(err => dispatch({ type: DELETE_USER_FAIL, payload: err }));
 };
