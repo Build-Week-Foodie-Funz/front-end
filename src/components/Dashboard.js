@@ -35,11 +35,12 @@ const ProfileImage = styled.img`
   border-radius: 50%;
   border: 4px solid White;
   margin-left: 30px;
+  margin-top: -100px;
 `;
 
 const UsersName = styled.h2`
   font-size: 2rem;
-  width: 400px;
+  width: 200px;
 `;
 
 const SearchForms = styled.div`
@@ -60,9 +61,11 @@ const Header = styled.header`
   display: flex;
   flex-wrap: wrap;
   a {
+  
     position: relative;
     margin: 20px;
     float: right;
+    justify-content: space-between;
   }
 `;
 
@@ -71,7 +74,7 @@ const RestCards = styled.div`
 display: flex;
 flex-direction: row;
 flex-wrap: wrap;
-justify-content: center:
+justify-content: center;
 align-items: center;
 width: 100%;
 `;
@@ -94,7 +97,7 @@ const Dashboard = props => {
   const [userInformation, setUserInformation] = useState();
 
 
-  // storug the3 inputs inside an object {
+  // storing the 3 inputs inside an object {
   // field1: "", field2: "", field: ""
   //}
   const [inputData, setInputData] = useState({
@@ -153,9 +156,9 @@ const Dashboard = props => {
         {props.user.restaurant
           ? props.user.restaurant.map(rest => {
             return (
-              <>
-                <h3>{rest.restname}</h3>
+              <CardDiv>
                 <img src={rest.restphotos[1].photo}></img>
+                <h3>{rest.restname}</h3>
                 <h4>Horus: {rest.resthours}</h4>
                 <p>Location: {rest.restlocation}</p>
                 <button
@@ -168,11 +171,10 @@ const Dashboard = props => {
                 >
                   View reviews
                   </button>
-              </>
+              </CardDiv>
             );
           })
           : null}
-        <h2>{props.user.username}</h2>
       </RestCards>
       {window.onload = () => props.getUser()}
     </PageContainer>
