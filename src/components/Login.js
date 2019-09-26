@@ -61,7 +61,7 @@ const StyledDiv = styled.div`
     .wave {
       opacity: 0.4;
       position: absolute;
-      top: 70%;
+      top: 80%;
       // left: 20%;
       right: 0;
       left: 0;

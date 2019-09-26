@@ -31,7 +31,7 @@ import {
 
 const initialState = {
   user: {},
-  restaurant: [],
+  reviews: [],
   error: "",
   isFetching: false,
 };
@@ -49,7 +49,7 @@ function reducer(state = initialState, action) {
       console.log("action, success", action.payload);
       return {
         ...state,
-        restaurant: [...action.payload],
+        reviews: [...action.payload],
         isFetching: false,
         error: "",
       };
