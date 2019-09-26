@@ -20,11 +20,6 @@ import { connect } from "react-redux";
 import { getUser } from "../actions/actions";
 
 
-const FoodPicture = styled.img`
-  width: 100px;
-  height: 100px;
-`;
-
 const HeaderImage = styled.img`
   height 5%;
   border-radius: 10%;
@@ -74,15 +69,26 @@ const Header = styled.header`
 `;
 
 const RestCards = styled.div`
-  width: 30%;
-  Height: 530px;
-  border: 1px solid black;
-  img{
-    width: 300px;
-    height: 300px;
-  }
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+justify-content: center:
+align-items: center;
+width: 100%;
 `;
 
+const CardDiv = styled.div` 
+height: 450px;
+  border-radius: 10%;
+  border: 2px solid #B55E1C;
+  margin: 40px;
+  overflow: hidden;
+  img{
+    width: 300px;
+    height: 250px;
+    border-radius: 10%;
+  }
+`;
 
 
 const Dashboard = props => {
@@ -118,15 +124,14 @@ const Dashboard = props => {
         {/* <FoodPicture src='https://images.unsplash.com/photo-1557872943-16a5ac26437e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1316&q=80'></FoodPicture> */}
         {props.user.restaurant ? props.user.restaurant.map((rest) => {
           return (
-            <>
-              <h3>{rest.restname}</h3>
+            <CardDiv>
               <img src={rest.restphotos[1].photo}></img>
+              <h3>{rest.restname}</h3>
               <h4>Horus: {rest.resthours}</h4>
               <p>Location: {rest.restlocation}</p>
               <button rest={rest} src='/reviews'>View reviews</button>
-            </>)
+            </CardDiv>)
         }) : null}
-        <h2>{props.user.username}</h2>
       </RestCards>
       {/* <button onClick={() => console.log("on button press", props.getUser())}>Get user</button> */}
     </PageContainer>
