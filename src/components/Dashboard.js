@@ -16,6 +16,8 @@ import React, { useState, useEffect } from "react";
 import { axiosWithAuth } from "../axios/axiosWithAuth";
 import { userInfo } from "os";
 import styled from "styled-components";
+import defaultFood from "../images/default_food.jpg";
+import profilePicture from "../images/defaultuser.png";
 import Reviews from "./Reviews";
 import { connect } from "react-redux";
 import { getUser } from "../actions/actions";
@@ -63,7 +65,6 @@ const Header = styled.header`
   display: flex;
   flex-wrap: wrap;
   a {
-  
     position: relative;
     margin: 20px;
     float: right;
@@ -72,12 +73,12 @@ const Header = styled.header`
 `;
 
 const RestCards = styled.div`
-display: flex;
-flex-direction: row;
-flex-wrap: wrap;
-justify-content: center;
-align-items: center;
-width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 `;
 
 const CardDiv = styled.div`
@@ -87,7 +88,7 @@ const CardDiv = styled.div`
   margin: 40px;
   overflow: hidden;
   background: white;
-  img{
+  img {
     width: 300px;
     height: 250px;
     border-radius: 10%;
@@ -95,51 +96,49 @@ const CardDiv = styled.div`
 `;
 
 const Dashboard = props => {
-  // Pull from state originally, if filtered then chnge it up accordingly
-  const [userInformation, setUserInformation] = useState();
+  const [userInformation, setUserInformation] = useState({});
 
-
-  // storing the 3 inputs inside an object {
-  // field1: "", field2: "", field: ""
-  //}
   const [inputData, setInputData] = useState({
     name: "",
     type: "",
-    price: "",
+    price: ""
   });
 
   const monitorInput = e => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
-    // console.log(inputData)
+    console.log(inputData);
   };
 
   useEffect(() => {
-    setUserInformation(props.getUser());
-    console.log("THEFRIKC", userInformation);
     if (inputData.name.length > 0) {
-      // userInformation.filter((rest) => {
-      // return rest.includes(inputData.name)
-      // console.log("REST NAME", rest)
-      // })
+      // {
+      //   userInformation
+      //     ? userInformation.restaurant.filter(rest => {
+      //         console.log("rest", rest);
+      //         // return rest.restname.includes(inputData.name)
+      //         // console.log("REST NAME", rest)
+      //       })
+      //     : null;
+      // }
     } else if (inputData.type.length > 0) {
     } else if (inputData.price.length > 0) {
     } else {
-      setUserInformation(props.getUser());
+      setUserInformation({ ...props.user });
+      console.log("THEFRIKC", userInformation);
     }
   }, [inputData]);
 
-  // useEffect(() => {
-  //   inputData.filter()
-  // }, [inputData])
-
   // window.onload = setUserInformation(props.getUser());
-  console.log("This is REst", props.user.restaurant);
+
+  // console.log("This is REst", props.user.restaurant);
   return (
     <PageContainer>
       <Header>
         <HeaderImage src="https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"></HeaderImage>
-        <ProfileImage src="https://images.unsplash.com/photo-1512794268250-65fd4cd7441f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80"></ProfileImage>
-        <UsersName>Hello, Jimmy Bobby!</UsersName>
+        <ProfileImage
+          src={props.user.photo ? props.user.photo : profilePicture}
+        ></ProfileImage>
+        <UsersName>Hello, {props.user.username}!</UsersName>
         <a href="/editprofile">Edit Profile</a>
         <a href="/addrestaurant">Add Restaurant</a>
         <a href="/foodform">Add Review</a>
@@ -166,17 +165,21 @@ const Dashboard = props => {
       </SearchForms>
       <RestCards>
         {/* <FoodPicture src='https://images.unsplash.com/photo-1557872943-16a5ac26437e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1316&q=80'></FoodPicture> */}
-        {props.user.restaurant
-          ? props.user.restaurant.map(rest => {
+        {props.user.restaurant ? (
+          props.user.restaurant.map(rest => {
             return (
               <CardDiv>
-                <img src={rest.restphotos[1].photo}></img>
+                <img
+                  src={
+                    rest.restphotos[0] ? rest.restphotos[0].photo : defaultFood
+                  }
+                ></img>
                 <h3>{rest.restname}</h3>
                 <h4>Horus: {rest.resthours}</h4>
                 <p>Location: {rest.restlocation}</p>
-                <p>{rest.restrating}</p> 
+                <p>{rest.restrating}</p>
                 <button
-                  className='btn-2'
+                  className="btn-2"
                   rest={rest}
                   onClick={() => {
                     console.log(rest);
@@ -185,20 +188,30 @@ const Dashboard = props => {
                   }}
                 >
                   View reviews
-                  </button>
+                </button>
               </CardDiv>
             );
           })
-          : null}
+        ) : (
+          <h2>Loading..</h2>
+        )}
       </RestCards>
-      {(window.onload = () => props.getUser())}
+      {
+        (window.onload = () => {
+          props.getUser();
+          setTimeout(function() {
+            setUserInformation({ ...props.user });
+            console.log("frick on load", userInformation);
+          }, 1000);
+        })
+      }
     </PageContainer>
   );
 };
 
 const mapStateToProps = state => {
   return {
-    user: state.user,
+    user: state.user
   };
 };
 
