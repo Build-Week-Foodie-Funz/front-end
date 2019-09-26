@@ -29,28 +29,28 @@ const CardDiv = styled.div`
 
 const Reviews = props => {
   //   console.log("Restaurant1", props.reviews);
-  setTimeout(function() {
+  setTimeout(function () {
     console.log("Restaurant", props.reviews);
   }, 500);
   return (
     <FoodCards>
       {props.reviews
         ? props.reviews.map(rest => {
-            console.log(rest);
-            return (
-              <>
-                <CardDiv>
-                  <img src={rest.photomenu}></img>
-                  <h2>Name: {rest.restaurant.restname}</h2>
-                  <h3>Food Type: {rest.cuisinetype}</h3>
-                  <h3>Menu Item: {rest.menuitemname}</h3>
-                  <h3>Price: {rest.itemprice}</h3>
-                  <h3>Rating: {rest.itemrating}</h3>
-                  <h3>{rest.shortreview}</h3>
-                </CardDiv>
-              </>
-            );
-          })
+          console.log(rest);
+          return (
+            <>
+              <CardDiv>
+                <img src={rest.photomenu}></img>
+                <h2>Name: {rest.restaurant.restname}</h2>
+                <h3>Food Type: {rest.cuisinetype}</h3>
+                <h3>Menu Item: {rest.menuitemname}</h3>
+                <h3>Price: {rest.itemprice}</h3>
+                <h3>Rating: {rest.itemrating}</h3>
+                <h3>{rest.shortreview}</h3>
+              </CardDiv>
+            </>
+          );
+        })
         : null}
       {(window.onload = () => props.getRestaurant(props.match.params.id))}
     </FoodCards>
