@@ -39,6 +39,7 @@ const Reviews = props => {
 
   return (
     <FoodCards>
+      {props.getRestaurant(props.match.params.id)}
       {props.reviews.length > 0
         ? props.reviews.map(rest => {
             console.log(rest);
@@ -87,7 +88,7 @@ const Reviews = props => {
             );
           })
         : null}
-      {(window.onload = () => props.getRestaurant(props.match.params.id))}
+      {/* {(window.onload = () => props.getRestaurant(props.match.params.id))} */}
     </FoodCards>
   );
 };

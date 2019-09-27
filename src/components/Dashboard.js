@@ -143,6 +143,7 @@ const Dashboard = props => {
   // console.log("This is REst", props.user.restaurant);
   return (
     <PageContainer>
+      {props.getUser()}
       <Header>
         <HeaderImage src="https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"></HeaderImage>
         <ProfileImage
@@ -250,13 +251,13 @@ const Dashboard = props => {
           : null}
       </RestCards>
       {
-        (window.onload = () => {
-          props.getUser();
-          setTimeout(function() {
-            setUserInformation({ ...props.user });
-            console.log("frick on load", userInformation);
-          }, 1000);
-        })
+        // (window.onload = () => {
+        //   props.getUser();
+        //   setTimeout(function() {
+        //     setUserInformation({ ...props.user });
+        //     console.log("frick on load", userInformation);
+        //   }, 1000);
+        // })
       }
     </PageContainer>
   );
