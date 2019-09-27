@@ -11,5 +11,3 @@ The last step would be to install all necessary dependencies, which are listed d
 ```js
 npm i react react-redux redux-thunk axios styled-components node-sass
 ```
-
-# Can someone please generate a better MD for me? There are libraries for it 👀
