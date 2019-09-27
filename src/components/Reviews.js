@@ -1,38 +1,41 @@
 import React from "react";
 
 import { connect } from "react-redux";
-import { getRestaurant } from "../actions/actions";
+import { getRestaurant, editReview, deleteReview } from "../actions/actions";
 
 import styled from "styled-components";
 import "../styles/button.scss";
 
 const FoodCards = styled.div`
   display: flex;
+  flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 `;
 const Header = styled.h2`
   color: #008b91;
   font-family: Chinese Rocks;
 `;
 const CardDiv = styled.div`
-  height: 600px;
-  border-radius: 10%;
+  height: auto;
+  border-radius: 2em;
   border: 2px solid #b55e1c;
   margin: 40px;
   overflow: hidden;
-  width: 350px;
+  width: 18em;
   img {
     width: 300px;
-    height: 250px;
+    height: 220px;
     border-radius: 10%;
   }
 `;
 
 const Reviews = props => {
-  //   console.log("Restaurant1", props.reviews);
   setTimeout(function() {
     console.log("Restaurant props", props);
-  }, 500);
+  }, 2000);
 
   return (
     <FoodCards>
@@ -50,8 +53,35 @@ const Reviews = props => {
                   <h3>Price: {rest.itemprice}</h3>
                   <h3>Rating: {rest.itemrating}</h3>
                   <h3>{rest.shortreview}</h3>
-                  <button className="btn-2">Edit</button>
-                  <button className="btn-2">Delete</button>
+                  <div>
+                    <button
+                      className="btn-3"
+                      onClick={() => {
+                        // props.editReview(restid, rest.reviewid, props);
+                        console.log(
+                          "Restraunt: ",
+                          props.match.params.id,
+                          "review id: ",
+                          rest.reviewid
+                        );
+                        props.history.push(
+                          `/foodform/${props.match.params.id}-${rest.reviewid}`
+                        );
+                      }}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="btn-3"
+                      onClick={() => {
+                        props.deleteReview(rest.reviewid);
+
+                        props.history.push("/");
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </CardDiv>
               </>
             );
@@ -66,11 +96,11 @@ const Reviews = props => {
 
 const mapStateToProps = state => {
   return {
-    reviews: state.reviews,
+    reviews: state.reviews
   };
 };
 
 export default connect(
   mapStateToProps,
-  { getRestaurant }
+  { getRestaurant, editReview, deleteReview }
 )(Reviews);

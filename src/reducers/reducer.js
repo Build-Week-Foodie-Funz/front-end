@@ -35,6 +35,7 @@ import {
 const initialState = {
   user: {},
   reviews: [],
+  singularReview: {},
   error: "",
   isFetching: false
 };
@@ -42,6 +43,13 @@ const initialState = {
 function reducer(state = initialState, action) {
   console.log("State", state);
   switch (action.type) {
+    case "ONE_REVIEW_FETCH_SUCCESS":
+      return {
+        ...state,
+        singularReview: { ...action.payload },
+        isFetching: false,
+        error: ""
+      };
     case "CREATE_REVIEW_SUCCESS":
       return {
         ...state,
