@@ -16,7 +16,12 @@ import * as Yup from "yup";
 import axios from "axios";
 import defaultFood from "../images/default_food.jpg";
 import { connect } from "react-redux";
-import { getUser, createReview } from "../actions/actions";
+import {
+  getUser,
+  createReview,
+  editReview,
+  getAReview
+} from "../actions/actions";
 import { axiosWithAuth } from "../axios/axiosWithAuth";
 import styled from "styled-components";
 
@@ -38,6 +43,13 @@ const StyledForm = styled.div`
 `;
 
 const FoodForm = props => {
+  // ids stores an id for a restraunt(0th) and id for review(1st)
+  if (props.match.params.id) {
+    var ids = props.match.params.id.split("-");
+    console.log("IDS", ids);
+    console.log("Singular", props.singularReview);
+  }
+
   const [reviewData, setReviewData] = useState({
     menuitemname: "",
     photomenu: defaultFood,
@@ -57,27 +69,43 @@ const FoodForm = props => {
       <Form
         onSubmit={e => {
           e.preventDefault();
-          let idForAxios = 0;
-          let uploadData = {
-            ...reviewData,
-            restname: document.getElementById("choose-rest").value,
-            itemprice: parseInt(reviewData.itemprice)
-          };
+          if (ids) {
+            let newData = {
+              menuitemname:
+                reviewData.menuitemname || props.singularReview.menuitemname,
+              photomenu: reviewData.photomenu || props.singularReview.photomenu,
+              itemprice:
+                parseInt(reviewData.itemprice) ||
+                props.singularReview.itemprice,
+              itemrating:
+                reviewData.itemrating || props.singularReview.itemrating,
+              shortreview:
+                reviewData.shortreview || props.singularReview.shortreview,
+              restname: reviewData.restname || props.singularReview.restname,
+              cuisinetype:
+                reviewData.cuisinetype || props.singularReview.cuisinetype
+            };
+            props.editReview(ids[0], ids[1], newData);
+          } else {
+            let uploadData = {
+              ...reviewData,
+              restname: document.getElementById("choose-rest").value,
+              itemprice: parseInt(reviewData.itemprice)
+            };
 
-          // Finds restraunt's id that was chosen by a user at dropdown.
-          if (props.user.restaurant) {
-            props.user.restaurant.map((rest, i) => {
-              if (rest.restname === uploadData.restname) {
-                idForAxios = rest.restid;
-              }
-            });
+            let idForAxios = 0;
+            // Finds restraunt's id that was chosen by a user at dropdown.
+            if (props.user.restaurant) {
+              props.user.restaurant.map((rest, i) => {
+                if (rest.restname === uploadData.restname) {
+                  idForAxios = rest.restid;
+                }
+              });
+            }
+            props.createReview(idForAxios, uploadData);
           }
 
-          console.log("Submitted", uploadData);
-          console.log("Submitted id", parseInt(idForAxios));
-          // props.createReview(idForAxios, uploadData);
-          // props.getUser();
-          // props.history.push("/");
+          props.history.push("/");
         }}
       >
         <Header>
@@ -139,7 +167,12 @@ const FoodForm = props => {
         />
         <button className="btn">Submit</button>
       </Form>
-      {(window.onload = () => props.getUser())}
+      {
+        (window.onload = () => {
+          props.getUser();
+          if (ids) props.getAReview(ids[1]);
+        })
+      }
     </div>
   );
 };
@@ -162,11 +195,12 @@ const FormikFoodForm = withFormik({
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.user,
+    singularReview: state.singularReview
   };
 };
 
 export default connect(
   mapStateToProps,
-  { getUser, createReview }
+  { getUser, createReview, editReview, getAReview }
 )(FormikFoodForm);

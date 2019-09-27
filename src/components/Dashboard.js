@@ -190,7 +190,7 @@ const Dashboard = props => {
                     rest={rest}
                     onClick={() => {
                       props.history.push(`/reviews/${rest.restid}`);
-                      return <Reviews data={rest.restid} />;
+                      return <Reviews restrauntID={rest.restid} />;
                     }}
                   >
                     View reviews

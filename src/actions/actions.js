@@ -120,6 +120,16 @@ export const getRestaurant = id => dispatch => {
     .catch(err => dispatch({ type: RESTAURANT_FETCH_FAIL, payload: err }));
 };
 
+export const getAReview = id => dispatch => {
+  dispatch({ type: "ONE_REVIEW_FETCH_START" });
+  axiosWithAuth()
+    .get(`https://sethnadu-foodie-bw.herokuapp.com/user/reviews/${id}`)
+    .then(res => {
+      dispatch({ type: "ONE_REVIEW_FETCH_SUCCESS", payload: res.data });
+    })
+    .catch(err => dispatch({ type: "ONE_REVIEW_FETCH_FAIL", payload: err }));
+};
+
 export const editRest = (id, rest) => dispatch => {
   console.log(id, rest);
   dispatch({ type: "EDIT_REST_START" });
@@ -129,6 +139,20 @@ export const editRest = (id, rest) => dispatch => {
       console.log("edited user");
     })
     .catch(err => dispatch({ type: "EDIT_REST_FAIL", payload: err }));
+};
+
+export const editReview = (restid, reviewid, rest) => dispatch => {
+  console.log(restid, reviewid, rest);
+  dispatch({ type: "EDIT_REVIEW_START" });
+  axiosWithAuth()
+    .put(
+      `https://sethnadu-foodie-bw.herokuapp.com/user/restaurant/${restid}/reviews/${reviewid}`,
+      rest
+    )
+    .then(res => {
+      console.log("edited user");
+    })
+    .catch(err => dispatch({ type: "EDIT_REVIEW_FAIL", payload: err }));
 };
 
 export const editUser = (id, user) => dispatch => {
@@ -149,6 +173,15 @@ export const deleteUSER = id => dispatch => {
     .delete(`http://localhost:5000/api/USER/${id}`)
     .then(console.log("deleted"))
     .catch(err => dispatch({ type: DELETE_USER_FAIL, payload: err }));
+};
+
+export const deleteReview = id => dispatch => {
+  console.log("delete id", id);
+  dispatch({ type: "DELETE_REVIEW_START" });
+  axiosWithAuth()
+    .delete(`https://sethnadu-foodie-bw.herokuapp.com/user/reviews/${id}`)
+    .then(console.log("deleted"))
+    .catch(err => dispatch({ type: "DELETE_REVIEW_FAIL", payload: err }));
 };
 
 export const deleteRest = id => dispatch => {

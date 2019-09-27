@@ -38,7 +38,8 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignUp} />
         {/* These four below will be converted to PrivateRouters*/}
-        <Route path="/foodform" component={FormikFoodForm} />
+        <Route exact path="/foodform" component={FormikFoodForm} />
+        <Route path="/foodform/:id" component={FormikFoodForm} />
         <Route path="/reviews/:id" component={Reviews} />
         <Route path="/editprofile/" component={FormikEditUser} />
         <Route path="/reset/" component={ResetPassword} />
