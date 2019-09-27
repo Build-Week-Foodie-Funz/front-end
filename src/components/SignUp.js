@@ -17,6 +17,11 @@ import * as Yup from "yup";
 import axios from "axios";
 import "../styles/button.scss";
 
+const HeaderDiv = styled.div`
+margin-top: 20px;
+  font-size: 2rem;
+`;
+
 const UserContainer = styled.div`
 	background-color: #fbfcee;
 	width: 100%;
@@ -28,7 +33,8 @@ const UserInput = styled.div`
 	height: 50px;
 `;
 const InputContainer = styled.div`
-	background-color: #fbfcee;
+  background-color: #fbfcee;
+  margin-bottom: 15px;
 `;
 
 const StyledField = styled.input`
@@ -44,14 +50,14 @@ const StyledField = styled.input`
 const ButtonContainer = styled.div`
 	display: flex;
 	flex-direction: column;
-	width: 45%;
+	width: 10%;
 	margin: 0 auto;
 `;
 
 const SignUp = props => {
   return (
     <UserContainer>
-      <div class="header">Sign Up</div>
+      <HeaderDiv>Sign Up</HeaderDiv>
       <Form
         id="signup-form"
         onSubmit={e => {
@@ -112,6 +118,7 @@ const SignUp = props => {
             )} */}
           </UserInput>
         </InputContainer>
+
         Forgot password? <a href="#">reset</a>
         <ButtonContainer>
           <button className="btn" type="submit">
