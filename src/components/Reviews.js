@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 import { connect } from "react-redux";
 import { getRestaurant } from "../actions/actions";
 
 import styled from "styled-components";
+import "../styles/button.scss";
 
 const FoodCards = styled.div`
   display: flex;
@@ -29,28 +30,32 @@ const CardDiv = styled.div`
 
 const Reviews = props => {
   //   console.log("Restaurant1", props.reviews);
-  setTimeout(function () {
-    console.log("Restaurant", props.reviews);
+  setTimeout(function() {
+    console.log("Restaurant props", props);
   }, 500);
+
   return (
     <FoodCards>
-      {props.reviews
+      {props.reviews.length > 0
         ? props.reviews.map(rest => {
-          console.log(rest);
-          return (
-            <>
-              <CardDiv>
-                <img src={rest.photomenu}></img>
-                <h2>Name: {rest.restaurant.restname}</h2>
-                <h3>Food Type: {rest.cuisinetype}</h3>
-                <h3>Menu Item: {rest.menuitemname}</h3>
-                <h3>Price: {rest.itemprice}</h3>
-                <h3>Rating: {rest.itemrating}</h3>
-                <h3>{rest.shortreview}</h3>
-              </CardDiv>
-            </>
-          );
-        })
+            console.log(rest);
+            return (
+              <>
+                <CardDiv>
+                  <Header></Header>
+                  <img src={rest.photomenu}></img>
+                  <h3> Name: {rest.restaurant.restname}</h3>
+                  <h3>Food Type: {rest.cuisinetype}</h3>
+                  <h3>Menu Item: {rest.menuitemname}</h3>
+                  <h3>Price: {rest.itemprice}</h3>
+                  <h3>Rating: {rest.itemrating}</h3>
+                  <h3>{rest.shortreview}</h3>
+                  <button className="btn-2">Edit</button>
+                  <button className="btn-2">Delete</button>
+                </CardDiv>
+              </>
+            );
+          })
         : null}
       {(window.onload = () => props.getRestaurant(props.match.params.id))}
     </FoodCards>

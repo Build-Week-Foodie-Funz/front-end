@@ -6,7 +6,7 @@
   font-size: 1.5em;
   border-radius: 20px;
   border: none;
-  width: 100%;
+  width: 95%;
   font-family: "Chica Mono";
 }
 
@@ -18,7 +18,20 @@
   border: 2px solid #008b91;
   font-size: 1.5em;
   border-radius: 20px;
-  width: 100%;
+  width: 95%;
+  border-color: #008b91;
+  font-family: "Chica Mono";
+}
+
+.btn-3 {
+  background-color: #fbfcee;
+  color: #008b91;
+  padding: 5px;
+  margin: 5px;
+  border: 2px solid #008b91;
+  font-size: 1em;
+  border-radius: 20px;
+  width: 45%;
   border-color: #008b91;
   font-family: "Chica Mono";
 }

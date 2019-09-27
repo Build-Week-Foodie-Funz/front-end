@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { withFormik, Field, Form } from "formik";
 import * as Yup from "yup";
-import { createRest, getUser } from "../actions/actions";
+import { createRest, getUser, editRest } from "../actions/actions";
 import { connect } from "react-redux";
 import axios from "axios";
 
@@ -58,75 +58,108 @@ const CreateRest = props => {
 
 	const createRestForm = e => {
 		setRestUpload({ ...restUpload, [e.target.name]: e.target.value });
-		console.log(restUpload);
 	};
 
-	console.log(restUpload);
+	console.log(props.match.params.id);
 	return (
-		<PageContainer>
-			<h1>Add a Restaurant</h1>
+		<>
 			<Form
 				onSubmit={e => {
-					e.preventDefault();
-					console.log("Submitter data", restUpload);
-					props.createRest(restUpload);
-					props.getUser();
-					props.history.push("/");
+					if (props.match.params.id) {
+						e.preventDefault();
+						let newData = {};
+						console.log("Submitter data", restUpload);
+
+						for (let i = 0; i < props.user.restaurant.length; i++) {
+							if (
+								props.user.restaurant[i].restid ===
+								parseInt(props.match.params.id)
+							) {
+								newData = {
+									restname:
+										restUpload.restname || props.user.restaurant[i].restname,
+									resthours:
+										restUpload.resthours || props.user.restaurant[i].resthours,
+									restlocation:
+										restUpload.restlocation ||
+										props.user.restaurant[i].restlocation,
+									restrating:
+										restUpload.restrating || props.user.restaurant[i].restrating
+								};
+								break;
+							}
+						}
+						props.editRest(props.match.params.id, newData);
+						props.getUser();
+						props.history.push("/");
+					} else {
+						e.preventDefault();
+						console.log("Submitter data", restUpload);
+						props.createRest(restUpload);
+						props.getUser();
+						props.history.push("/");
+					}
 				}}
 			>
-				<FormContainer>
-					<UserInput>
-						Name
-            <StyledField
+				<div className="why">
+					<div>
+						Name:
+            <input
 							type="text"
 							name="restname"
 							placeholder="Name"
 							onChange={createRestForm}
 						/>
-					</UserInput>
-					<UserInput>
-						Hours
-						<StyledField
+					</div>
+					<div>
+						<input
 							type="text"
 							name="resthours"
 							placeholder="Hours"
 							onChange={createRestForm}
 						/>
-					</UserInput>
-					<UserInput>
-						Location
-						<StyledField
+					</div>
+					<div>
+						<input
 							type="text"
 							name="restlocation"
-							placeholder="City, State"
+							placeholder="Location"
 							onChange={createRestForm}
 						/>
-					</UserInput>
-					<UserInput>
-						Photo
-						<StyledField
+					</div>
+					<div>
+						<input
 							type="text"
 							name="restphotos"
 							placeholder="URL photo"
 							onChange={createRestForm}
 						/>
-					</UserInput>
-					<UserInput>
-						Rating
-						<StyledField
+					</div>
+					<div>
+						<input
 							type="text"
 							name="restrating"
 							placeholder="Rating"
 							onChange={createRestForm}
 						/>
-					</UserInput>
+					</div>
+				</div>
+				{props.match.params.id ? (
 					<SubmitButton type="submit" className="btn">
-						Add Restaurant
-        </SubmitButton>
-				</FormContainer>
-
+						Edit Restaurant
+          </SubmitButton>
+				) : (
+						<SubmitButton type="submit" className="btn">
+							Add Restaurant
+          </SubmitButton>
+					)}
+				{
+					(window.onload = () => {
+						props.getUser();
+					})
+				}
 			</Form>
-		</PageContainer>
+		</>
 	);
 };
 
@@ -156,13 +189,13 @@ const FormikCreateRest = withFormik({
 	}
 })(CreateRest);
 
-// const mapStateToProps = state => {
-// 	return {
-// 	  user: state.user
-// 	};
-//   };
+const mapStateToProps = state => {
+	return {
+		user: state.user
+	};
+};
 
 export default connect(
-	null,
-	{ createRest, getUser }
+	mapStateToProps,
+	{ createRest, getUser, editRest }
 )(FormikCreateRest);

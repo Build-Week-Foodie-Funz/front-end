@@ -20,9 +20,7 @@ import defaultFood from "../images/default_food.jpg";
 import profilePicture from "../images/defaultuser.png";
 import Reviews from "./Reviews";
 import { connect } from "react-redux";
-import { getUser } from "../actions/actions";
-
-
+import { getUser, editRest, deleteRest } from "../actions/actions";
 
 const HeaderImage = styled.img`
   height: 5%;
@@ -84,17 +82,17 @@ const RestCards = styled.div`
   width: 100%;
 `;
 
-const CardDiv = styled.div` 
-  height: 450px;
-  border-radius: 10%;
-  border: 3px solid #b55e1c;
-  margin: 40px;
+const CardDiv = styled.div`
+  height: auto;
+  border-radius: 2em;
+  border: 2px solid #b55e1c;
+  margin: 30px;
   overflow: hidden;
   background: white;
   height: auto;
   img {
     width: 300px;
-    height: 250px;
+    height: 230px;
     border-radius: 10%;
   }
 `;
@@ -102,7 +100,6 @@ const CardDiv = styled.div`
 const DashButtons = styled.button`
   width: 70%;
 `;
-
 
 const Dashboard = props => {
   const [userInformation, setUserInformation] = useState({});
@@ -112,19 +109,19 @@ const Dashboard = props => {
   //}
   const [inputData, setInputData] = useState({
     name: "",
-    location: "",
+    location: ""
   });
 
-  const [filteredRests, setfilteredRests] = useState([])
+  const [filteredRests, setfilteredRests] = useState([]);
 
   useEffect(() => {
     axiosWithAuth()
-      .get('https://sethnadu-foodie-bw.herokuapp.com/user/restaurants')
+      .get("https://sethnadu-foodie-bw.herokuapp.com/user/restaurants")
       .then(res => {
         setUserInformation(res);
-        console.log('this is your axios call', userInformation)
-      })
-  }, [monitorInput])
+        console.log("this is your axios call", userInformation);
+      });
+  }, [monitorInput]);
 
   const monitorInput = e => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
@@ -133,14 +130,14 @@ const Dashboard = props => {
 
   const searchPosts = e => {
     e.preventDefault();
-    const cards = props.user.restaurant.filter((rest) => {
+    const cards = props.user.restaurant.filter(rest => {
       if (rest.restname.includes(inputData.name)) {
-        return rest
+        return rest;
       }
-    })
-    setfilteredRests(cards)
-    console.log('CARDS', cards)
-  }
+    });
+    setfilteredRests(cards);
+    console.log("CARDS", cards);
+  };
 
   // window.onload = setUserInformation(props.getUser());
   // console.log("This is REst", props.user.restaurant);
@@ -151,7 +148,7 @@ const Dashboard = props => {
         <ProfileImage
           src={props.user.photo ? props.user.photo : profilePicture}
         ></ProfileImage>
-        <UsersName className='rocks'>Hello, {props.user.username}!</UsersName>
+        <UsersName className="rocks">Hello, {props.user.username}!</UsersName>
         <a href="/editprofile">Edit Profile</a>
         <a href="/addrestaurant">Add Restaurant</a>
         <a href="/foodform">Add Review</a>
@@ -172,65 +169,90 @@ const Dashboard = props => {
       </SearchForms>
       <RestCards>
         {/* <FoodPicture src='https://images.unsplash.com/photo-1557872943-16a5ac26437e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1316&q=80'></FoodPicture> */}
-        {filteredRests.length > 0 ? filteredRests.map(rest => {
-          return (
-            <CardDiv>
-              <img
-                src={
-                  rest.restphotos[0] ? rest.restphotos[0].photo : defaultFood
-                }
-              ></img>
-              <h3>{rest.restname}</h3>
-              <h4>Horus: {rest.resthours}</h4>
-              <p>Location: {rest.restlocation}</p>
-              <p>{rest.restrating}</p>
-              <DashButtons
-                className="btn-2"
-                id='dash-btn'
-                rest={rest}
-                onClick={() => {
-                  props.history.push(`/reviews/${rest.restid}`);
-                  return <Reviews data={rest.restid} />;
-                }}
-              >
-                View reviews
-                </DashButtons >
-            </CardDiv>
-          );
-        })
+        {filteredRests.length > 0
+          ? filteredRests.map(rest => {
+              return (
+                <CardDiv>
+                  <img
+                    src={
+                      rest.restphotos[0]
+                        ? rest.restphotos[0].photo
+                        : defaultFood
+                    }
+                  ></img>
+                  <h3>{rest.restname}</h3>
+                  <h4>Horus: {rest.resthours}</h4>
+                  <p>Location: {rest.restlocation}</p>
+                  <p>{rest.restrating}</p>
+                  <DashButtons
+                    className="btn-2"
+                    id="dash-btn"
+                    rest={rest}
+                    onClick={() => {
+                      props.history.push(`/reviews/${rest.restid}`);
+                      return <Reviews data={rest.restid} />;
+                    }}
+                  >
+                    View reviews
+                  </DashButtons>
+                </CardDiv>
+              );
+            })
           : null}
-        {filteredRests.length === 0 && props.user.restaurant ? (
-          props.user.restaurant.map(rest => {
-            return (
-              <CardDiv>
-                <img
-                  src={
-                    rest.restphotos[0] ? rest.restphotos[0].photo : defaultFood
-                  }
-                ></img>
-                <h3>{rest.restname}</h3>
-                <h4>Horus: {rest.resthours}</h4>
-                <p>Location: {rest.restlocation}</p>
-                <p>{rest.restrating}</p>
-                <DashButtons
-                  className="btn-2"
-                  rest={rest}
-                  onClick={() => {
-                    props.history.push(`/reviews/${rest.restid}`);
-                    return <Reviews data={rest.restid} />;
-                  }}
-                >
-                  View reviews
-                </DashButtons>
-              </CardDiv>
-            );
-          })
-        ) : null}
+        {filteredRests.length === 0 && props.user.restaurant
+          ? props.user.restaurant.map(rest => {
+              return (
+                <CardDiv>
+                  <img
+                    src={
+                      rest.restphotos[0]
+                        ? rest.restphotos[0].photo
+                        : defaultFood
+                    }
+                  ></img>
+                  <h3>{rest.restname}</h3>
+                  <h4>Horus: {rest.resthours}</h4>
+                  <p>Location: {rest.restlocation}</p>
+                  <p>{rest.restrating}</p>
+                  <DashButtons
+                    className="btn-2"
+                    rest={rest}
+                    onClick={() => {
+                      props.history.push(`/reviews/${rest.restid}`);
+                      return <Reviews data={rest.restid} />;
+                    }}
+                  >
+                    View reviews
+                  </DashButtons>
+                  <div>
+                    <button
+                      className="btn-3"
+                      onClick={() => {
+                        props.history.push(`/addrestaurant/${rest.restid}`);
+                      }}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="btn-3"
+                      onClick={() => {
+                        console.log("Delete");
+                        props.deleteRest(rest.restid);
+                        // return <Reviews data={rest.restid} />;
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </CardDiv>
+              );
+            })
+          : null}
       </RestCards>
       {
         (window.onload = () => {
           props.getUser();
-          setTimeout(function () {
+          setTimeout(function() {
             setUserInformation({ ...props.user });
             console.log("frick on load", userInformation);
           }, 1000);
@@ -248,5 +270,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { getUser }
+  { getUser, editRest, deleteRest }
 )(Dashboard);
