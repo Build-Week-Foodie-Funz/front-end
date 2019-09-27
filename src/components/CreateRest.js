@@ -102,47 +102,51 @@ const CreateRest = props => {
 				}}
 			>
 				<div className="why">
-					<div>
+					<UserInput>
 						Name:
-            <input
+            <StyledField
 							type="text"
 							name="restname"
 							placeholder="Name"
 							onChange={createRestForm}
 						/>
-					</div>
-					<div>
-						<input
+					</UserInput>
+					<UserInput>
+						Hours
+						<StyledField
 							type="text"
 							name="resthours"
 							placeholder="Hours"
 							onChange={createRestForm}
 						/>
-					</div>
-					<div>
-						<input
+					</UserInput>
+					<UserInput>
+						Location
+						<StyledField
 							type="text"
 							name="restlocation"
-							placeholder="Location"
+							placeholder="City, State"
 							onChange={createRestForm}
 						/>
-					</div>
-					<div>
-						<input
+					</UserInput>
+					<UserInput>
+						Photo
+						<StyledField
 							type="text"
 							name="restphotos"
 							placeholder="URL photo"
 							onChange={createRestForm}
 						/>
-					</div>
-					<div>
-						<input
+					</UserInput>
+					<UserInput>
+						Rating
+						<StyledField
 							type="text"
 							name="restrating"
 							placeholder="Rating"
 							onChange={createRestForm}
 						/>
-					</div>
+					</UserInput>
 				</div>
 				{props.match.params.id ? (
 					<SubmitButton type="submit" className="btn">
