@@ -27,7 +27,7 @@ const HeaderImage = styled.img`
   border-radius: 10%;
   width: 100%;
   position: relative;
-  margin-top: -30%;
+  margin-top: -45%;
   z-index: -1;
 `;
 

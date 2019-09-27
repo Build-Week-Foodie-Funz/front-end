@@ -34,18 +34,22 @@ function App() {
       <GlobalStyles />
       <NavBar />
       <div className="App">
-        <Route exact path="/" component={Dashboard} />
+        <PrivateRoute exact path="/" component={Dashboard} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignUp} />
         {/* These four below will be converted to PrivateRouters*/}
-        <Route exact path="/foodform" component={FormikFoodForm} />
-        <Route path="/foodform/:id" component={FormikFoodForm} />
-        <Route path="/reviews/:id" component={Reviews} />
-        <Route path="/editprofile/" component={FormikEditUser} />
+        <PrivateRoute exact path="/foodform" component={FormikFoodForm} />
+        <PrivateRoute path="/foodform/:id" component={FormikFoodForm} />
+        <PrivateRoute path="/reviews/:id" component={Reviews} />
+        <PrivateRoute path="/editprofile/" component={FormikEditUser} />
         <Route path="/reset/" component={ResetPassword} />
-        <Route path="/fooditem/:id" component={FoodItem} />
-        <Route exact path="/addrestaurant" component={FormikCreateRest} />
-        <Route path="/addrestaurant/:id" component={FormikCreateRest} />
+        <PrivateRoute path="/fooditem/:id" component={FoodItem} />
+        <PrivateRoute
+          exact
+          path="/addrestaurant"
+          component={FormikCreateRest}
+        />
+        <PrivateRoute path="/addrestaurant/:id" component={FormikCreateRest} />
         {/* These four above will be converted to PrivateRouters*/}
       </div>
     </Router>
