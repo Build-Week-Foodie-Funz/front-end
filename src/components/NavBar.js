@@ -17,7 +17,6 @@ const Navigation = styled.nav`
   display: flex;
   justify-content: space-around;
   font-family: "Chica Mono";
-  background: red;
   @media (min-width: 500px) {
   }
   @media (min-width: 1200px) {
@@ -34,35 +33,33 @@ const NavItem = styled.a`
 `;
 
 const LogoImage = styled.img`
-  height: 90%;
+  height: 70%;
+  width: auto;
 `;
 
 const LogoContainer = styled.div`
   display: flex;
-  width: 20em;
+  width: 12em;
   align-items: center;
   height: 100%;
   display: flex;
-  justify-content: space-between;
-  background: yellow;
-`;
+  justify-content: space-around;
 
-const LogoText = styled.a`
-  display: flex;
-  text-decoration: none;
-  color: white;
-  font-size: 1.2em;
-  // margin-right: 5%;
+  h2 {
+    font-family: "Zrnic";
+    display: flex;
+    font-size: 1.8em;
+    text-decoration: none;
+    color: white;
+  }
 `;
 
 const NavigationBar = () => {
   return (
     <NavContainer>
       <LogoContainer>
-        <LogoText>
-          <LogoImage src={Logo} />
-          <h2>Foodie Fun</h2>
-        </LogoText>
+        <LogoImage src={Logo} />
+        <h2>Foodie Fun</h2>
       </LogoContainer>
       <Navigation>
         <NavItem href="/login">Login</NavItem>
